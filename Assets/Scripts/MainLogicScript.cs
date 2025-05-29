@@ -5,6 +5,14 @@ using UnityEngine;
 using UnityEngine.PlayerLoop;
 using UnityEngine.UIElements;
 
+public class Bag
+{
+    public Bag()
+    {
+        
+    }
+}
+
 public class MainLogicScript : MonoBehaviour
 {
     private int[,] gridValues;
@@ -82,11 +90,12 @@ public class MainLogicScript : MonoBehaviour
 
     void Start()
     {
-        InitializeGridValues(6, 3);
+        InitializeGridValues(50, 70);
+        RenderGrid();
     }
 
     void FixedUpdate()
     {
-        RenderGrid();
+        // RenderGrid();
     }
 }

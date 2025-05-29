@@ -148,18 +148,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4530d15257f13a4f8c70ddae13520d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gridOffset: {x: 0, y: 0}
   cellRenderingParent: {fileID: 639895282}
   cellRenderingSpritePrefab: {fileID: 4049677247267017472, guid: bae683657c176204e97462a2fd30fce2, type: 3}
   cellRenderingSprites:
-  - {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  - {fileID: -2413806693520163455, guid: 4adeaf2d2b1c7417e89f026626d8264f, type: 3}
-  - {fileID: -2413806693520163455, guid: 4adeaf2d2b1c7417e89f026626d8264f, type: 3}
-  - {fileID: -2413806693520163455, guid: 4adeaf2d2b1c7417e89f026626d8264f, type: 3}
-  - {fileID: -2413806693520163455, guid: 4adeaf2d2b1c7417e89f026626d8264f, type: 3}
-  - {fileID: -2135585597343286014, guid: eed45a33cd08446c8b88325cf82fc52f, type: 3}
-  - {fileID: -2135585597343286014, guid: eed45a33cd08446c8b88325cf82fc52f, type: 3}
-  - {fileID: -2135585597343286014, guid: eed45a33cd08446c8b88325cf82fc52f, type: 3}
-  - {fileID: -2135585597343286014, guid: eed45a33cd08446c8b88325cf82fc52f, type: 3}
+  - {fileID: -561631821268360379, guid: 063c0020e9f59754382fbb650b63b043, type: 3}
+  - {fileID: 2077942009055699268, guid: 063c0020e9f59754382fbb650b63b043, type: 3}
+  - {fileID: 8551498401223548320, guid: 063c0020e9f59754382fbb650b63b043, type: 3}
+  - {fileID: -1464185502667953959, guid: 063c0020e9f59754382fbb650b63b043, type: 3}
+  - {fileID: 8277914673319948359, guid: 063c0020e9f59754382fbb650b63b043, type: 3}
+  - {fileID: 8387271357398606518, guid: 063c0020e9f59754382fbb650b63b043, type: 3}
+  - {fileID: -3446354060729661756, guid: 063c0020e9f59754382fbb650b63b043, type: 3}
+  - {fileID: -5639644066303088799, guid: 063c0020e9f59754382fbb650b63b043, type: 3}
+  - {fileID: 2125708785169667824, guid: 063c0020e9f59754382fbb650b63b043, type: 3}
 --- !u!4 &1024809
 Transform:
   m_ObjectHideFlags: 0
@@ -256,7 +257,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.7742613, g: 0.90188676, b: 0.88536954, a: 0}
+  m_BackGroundColor: {r: 0, g: 0.12793468, b: 0.5698112, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
