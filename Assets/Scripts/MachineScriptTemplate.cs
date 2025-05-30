@@ -4,15 +4,15 @@ using UnityEngine;
 public class MachineScriptTemplate : MonoBehaviour
 {
     [SerializeField] private MainLogicScript mainLogicScript;
-    [SerializeField] private List<Bag> input;
-    [SerializeField] private List<Bag> output;
+    [SerializeField] private List<Bag> input = new();
+    [SerializeField] private List<Bag> output = new();
     [SerializeField] private int inputSize;
     [SerializeField] private int outputSize;
     [SerializeField] private float processingTime;
     [SerializeField] private int machineType;
     [SerializeField] private List<MachineScriptTemplate> connectedInputMachines;
     [SerializeField] private List<MachineScriptTemplate> connectedOutputMachines;
-    private int inputMachineIndex; 
+    private int inputMachineIndex;
     private int outputMachineIndex = 0;
     private float lastTimeProcessing;
 
@@ -30,6 +30,8 @@ public class MachineScriptTemplate : MonoBehaviour
                 }
             }
         }
+        // Try to output object
+        OutputObject();
     }
 
     public bool InputObject(Bag bag)
@@ -48,7 +50,12 @@ public class MachineScriptTemplate : MonoBehaviour
         // Check to make sure there is room in output
         if (output.Count < outputSize)
         {
-            return false;
+            switch (machineType)
+            {
+                case 9:
+                    output.Add(new());
+                    return true;
+            }
         }
         return false;
     }
@@ -60,6 +67,7 @@ public class MachineScriptTemplate : MonoBehaviour
         {
             return false;
         }
+        // Get the correct machine to output to
         for (int i = outputMachineIndex; i != outputMachineIndex - 1; i++)
         {
             if (i < connectedOutputMachines.Count)
@@ -67,6 +75,7 @@ public class MachineScriptTemplate : MonoBehaviour
                 i = 0;
             }
             MachineScriptTemplate machineToOutputTo = connectedOutputMachines[i];
+            // Output if succesful
             if (machineToOutputTo.InputObject(output[0]))
             {
                 output.RemoveAt(0);
@@ -75,5 +84,26 @@ public class MachineScriptTemplate : MonoBehaviour
             }
         }
         return false;
+    }
+
+    public void SetMainLogicScript(MainLogicScript script)
+    {
+        mainLogicScript = script;
+    }
+
+    public void SetMachineType(int type)
+    {
+        machineType = type;
+        switch (machineType)
+        {
+            // Input block
+            case 9:
+                inputSize = 1;
+                outputSize = 1;
+                processingTime = 1;
+                // Create new empty bag for control
+                InputObject(new Bag());
+                break;
+        }
     }
 }

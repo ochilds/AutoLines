@@ -21,6 +21,8 @@ public class MainLogicScript : MonoBehaviour
     [SerializeField] private GameObject cellRenderingParent;
     [SerializeField] private GameObject cellRenderingSpritePrefab;
     [SerializeField] private Sprite[] cellRenderingSprites;
+    [SerializeField] private GameObject machineLogicParent;
+    [SerializeField] private GameObject machineLogicPrefab;
 
     // Initialize grid values with empty squares in middle and special edges
     public void InitializeGridValues(int gridHeight, int gridWidth)
@@ -50,11 +52,19 @@ public class MainLogicScript : MonoBehaviour
     }
 
     // Changed cell value at inputed position to inputed value if the cell is empty
-    public void EditEmptyCellValue(int x, int y, int value)
+    public void EditEmptyCellValue(int x, int y, int value, bool render=false)
     {
         if (gridValues[x, y] == 0)
         {
             gridValues[x, y] = value;
+        }
+        if (value > 8)
+        {
+            InitializeMachineLogic(value);
+        }
+        if (render)
+        {
+            RenderGrid();
         }
     }
 
@@ -88,14 +98,23 @@ public class MainLogicScript : MonoBehaviour
         cell.GetComponent<SpriteRenderer>().sprite = cellRenderingSprites[spriteIndex];
     }
 
+    public void InitializeMachineLogic(int machineType)
+    {
+        GameObject machine = Instantiate(machineLogicPrefab, machineLogicParent.transform);
+        MachineScriptTemplate script = machine.GetComponent<MachineScriptTemplate>();
+        script.SetMachineType(machineType);
+        script.SetMainLogicScript(GetComponent<MainLogicScript>());
+    }
+
     void Start()
     {
         InitializeGridValues(50, 70);
         RenderGrid();
+        EditEmptyCellValue(25, 35, 9, true);
     }
 
     void FixedUpdate()
     {
-        // RenderGrid();
+        
     }
 }
