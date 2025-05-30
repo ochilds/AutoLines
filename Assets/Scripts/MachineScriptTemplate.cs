@@ -52,8 +52,14 @@ public class MachineScriptTemplate : MonoBehaviour
         {
             switch (machineType)
             {
+                // Input block
                 case 9:
                     output.Add(new());
+                    return true;
+                // Output block
+                case 10:
+                    mainLogicScript.OutputBag(input[0]);
+                    input.RemoveAt(0);
                     return true;
             }
         }
@@ -103,6 +109,12 @@ public class MachineScriptTemplate : MonoBehaviour
                 processingTime = 1;
                 // Create new empty bag for control
                 InputObject(new Bag());
+                break;
+            // Output block
+            case 10:
+                inputSize = 1;
+                outputSize = 0;
+                processingTime = 0.05f;
                 break;
         }
     }

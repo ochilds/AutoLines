@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -23,6 +24,7 @@ public class MainLogicScript : MonoBehaviour
     [SerializeField] private Sprite[] cellRenderingSprites;
     [SerializeField] private GameObject machineLogicParent;
     [SerializeField] private GameObject machineLogicPrefab;
+    [SerializeField] private List<Bag> outputtedBags;
 
     // Initialize grid values with empty squares in middle and special edges
     public void InitializeGridValues(int gridHeight, int gridWidth)
@@ -106,11 +108,15 @@ public class MainLogicScript : MonoBehaviour
         script.SetMainLogicScript(GetComponent<MainLogicScript>());
     }
 
+    public void OutputBag(Bag bag)
+    {
+        outputtedBags.Add(bag);
+    }
+
     void Start()
     {
         InitializeGridValues(50, 70);
         RenderGrid();
-        EditEmptyCellValue(25, 35, 9, true);
     }
 
     void FixedUpdate()
