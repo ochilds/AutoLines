@@ -124,7 +124,7 @@ public class MainLogicScript : MonoBehaviour
         RenderGrid();
         // Initilize input objects
         controls = new();
-        controls.DefaultGameplay.Enable();
+        // controls.DefaultGameplay.Enable();
     }
 
     void FixedUpdate()

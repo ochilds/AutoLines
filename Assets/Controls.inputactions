@@ -127,6 +127,34 @@
                     "isPartOfComposite": true
                 }
             ]
+        },
+        {
+            "name": "Testing Mouse Camera",
+            "id": "55dd9274-f9cf-41b2-ba2f-650ba004eaec",
+            "actions": [
+                {
+                    "name": "ActivateMouseMovement",
+                    "type": "Button",
+                    "id": "25255082-92e6-4b91-9ac5-ab632fbde817",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "58d69ae6-cdb6-418f-af13-7e45218237b4",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ActivateMouseMovement",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

@@ -1,20 +1,32 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 
 public class CameraLogic : MonoBehaviour
 {
     private Camera camera;
     [SerializeField] private float xBounds;
     [SerializeField] private float yBounds;
+    private Vector2 positionOfMouseWhenMovementStart;
+    private Controls controls;
+    private bool mouseMovementActive = false;
 
     void Start()
     {
+        // Get camera
         camera = GetComponent<Camera>();
+        // Enable Input
+        controls = new();
+        controls.TestingMouseCamera.Enable();
+        controls.TestingMouseCamera.ActivateMouseMovement.started += ActivateCameraMovement;
+        controls.TestingMouseCamera.ActivateMouseMovement.canceled += DeactivateCameraMovement;
     }
 
     public void MoveCamera(Vector2 value)
     {
-        Debug.Log(camera.ScreenToWorldPoint(value));
+        // Move the camera
         transform.Translate(value);
+        // Snap back in bound if outside of bounds
         if (transform.position.x > xBounds)
         {
             transform.Translate(Vector2.right * (xBounds - transform.position.x));
@@ -30,6 +42,27 @@ public class CameraLogic : MonoBehaviour
         if (transform.position.y < -yBounds)
         {
             transform.Translate(Vector2.down * (yBounds + transform.position.y));
+        }
+    }
+
+    public void ActivateCameraMovement(InputAction.CallbackContext context)
+    {
+        mouseMovementActive = true;
+        positionOfMouseWhenMovementStart = camera.ScreenToWorldPoint(Input.mousePosition);
+    }
+
+    public void DeactivateCameraMovement(InputAction.CallbackContext context)
+    {
+        mouseMovementActive = false;
+    }
+
+    void Update()
+    {
+        if (mouseMovementActive)
+        {
+            Vector2 mousePosition = (Vector2)camera.ScreenToWorldPoint(Input.mousePosition);
+            Debug.Log(positionOfMouseWhenMovementStart - mousePosition);
+            MoveCamera(positionOfMouseWhenMovementStart - mousePosition);
         }
     }
 }

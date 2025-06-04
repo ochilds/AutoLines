@@ -213,6 +213,34 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 }
             ]
+        },
+        {
+            ""name"": ""Testing Mouse Camera"",
+            ""id"": ""55dd9274-f9cf-41b2-ba2f-650ba004eaec"",
+            ""actions"": [
+                {
+                    ""name"": ""ActivateMouseMovement"",
+                    ""type"": ""Button"",
+                    ""id"": ""25255082-92e6-4b91-9ac5-ab632fbde817"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""58d69ae6-cdb6-418f-af13-7e45218237b4"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ActivateMouseMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -220,11 +248,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         // Default Gameplay
         m_DefaultGameplay = asset.FindActionMap("Default Gameplay", throwIfNotFound: true);
         m_DefaultGameplay_MoveCamera = m_DefaultGameplay.FindAction("Move Camera", throwIfNotFound: true);
+        // Testing Mouse Camera
+        m_TestingMouseCamera = asset.FindActionMap("Testing Mouse Camera", throwIfNotFound: true);
+        m_TestingMouseCamera_ActivateMouseMovement = m_TestingMouseCamera.FindAction("ActivateMouseMovement", throwIfNotFound: true);
     }
 
     ~@Controls()
     {
         UnityEngine.Debug.Assert(!m_DefaultGameplay.enabled, "This will cause a leak and performance issues, Controls.DefaultGameplay.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_TestingMouseCamera.enabled, "This will cause a leak and performance issues, Controls.TestingMouseCamera.Disable() has not been called.");
     }
 
     /// <summary>
@@ -392,6 +424,102 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     /// Provides a new <see cref="DefaultGameplayActions" /> instance referencing this action map.
     /// </summary>
     public DefaultGameplayActions @DefaultGameplay => new DefaultGameplayActions(this);
+
+    // Testing Mouse Camera
+    private readonly InputActionMap m_TestingMouseCamera;
+    private List<ITestingMouseCameraActions> m_TestingMouseCameraActionsCallbackInterfaces = new List<ITestingMouseCameraActions>();
+    private readonly InputAction m_TestingMouseCamera_ActivateMouseMovement;
+    /// <summary>
+    /// Provides access to input actions defined in input action map "Testing Mouse Camera".
+    /// </summary>
+    public struct TestingMouseCameraActions
+    {
+        private @Controls m_Wrapper;
+
+        /// <summary>
+        /// Construct a new instance of the input action map wrapper class.
+        /// </summary>
+        public TestingMouseCameraActions(@Controls wrapper) { m_Wrapper = wrapper; }
+        /// <summary>
+        /// Provides access to the underlying input action "TestingMouseCamera/ActivateMouseMovement".
+        /// </summary>
+        public InputAction @ActivateMouseMovement => m_Wrapper.m_TestingMouseCamera_ActivateMouseMovement;
+        /// <summary>
+        /// Provides access to the underlying input action map instance.
+        /// </summary>
+        public InputActionMap Get() { return m_Wrapper.m_TestingMouseCamera; }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
+        public void Enable() { Get().Enable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
+        public void Disable() { Get().Disable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
+        public bool enabled => Get().enabled;
+        /// <summary>
+        /// Implicitly converts an <see ref="TestingMouseCameraActions" /> to an <see ref="InputActionMap" /> instance.
+        /// </summary>
+        public static implicit operator InputActionMap(TestingMouseCameraActions set) { return set.Get(); }
+        /// <summary>
+        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <param name="instance">Callback instance.</param>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
+        /// </remarks>
+        /// <seealso cref="TestingMouseCameraActions" />
+        public void AddCallbacks(ITestingMouseCameraActions instance)
+        {
+            if (instance == null || m_Wrapper.m_TestingMouseCameraActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_TestingMouseCameraActionsCallbackInterfaces.Add(instance);
+            @ActivateMouseMovement.started += instance.OnActivateMouseMovement;
+            @ActivateMouseMovement.performed += instance.OnActivateMouseMovement;
+            @ActivateMouseMovement.canceled += instance.OnActivateMouseMovement;
+        }
+
+        /// <summary>
+        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
+        /// </remarks>
+        /// <seealso cref="TestingMouseCameraActions" />
+        private void UnregisterCallbacks(ITestingMouseCameraActions instance)
+        {
+            @ActivateMouseMovement.started -= instance.OnActivateMouseMovement;
+            @ActivateMouseMovement.performed -= instance.OnActivateMouseMovement;
+            @ActivateMouseMovement.canceled -= instance.OnActivateMouseMovement;
+        }
+
+        /// <summary>
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="TestingMouseCameraActions.UnregisterCallbacks(ITestingMouseCameraActions)" />.
+        /// </summary>
+        /// <seealso cref="TestingMouseCameraActions.UnregisterCallbacks(ITestingMouseCameraActions)" />
+        public void RemoveCallbacks(ITestingMouseCameraActions instance)
+        {
+            if (m_Wrapper.m_TestingMouseCameraActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        /// <summary>
+        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
+        /// </remarks>
+        /// <seealso cref="TestingMouseCameraActions.AddCallbacks(ITestingMouseCameraActions)" />
+        /// <seealso cref="TestingMouseCameraActions.RemoveCallbacks(ITestingMouseCameraActions)" />
+        /// <seealso cref="TestingMouseCameraActions.UnregisterCallbacks(ITestingMouseCameraActions)" />
+        public void SetCallbacks(ITestingMouseCameraActions instance)
+        {
+            foreach (var item in m_Wrapper.m_TestingMouseCameraActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_TestingMouseCameraActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    /// <summary>
+    /// Provides a new <see cref="TestingMouseCameraActions" /> instance referencing this action map.
+    /// </summary>
+    public TestingMouseCameraActions @TestingMouseCamera => new TestingMouseCameraActions(this);
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Default Gameplay" which allows adding and removing callbacks.
     /// </summary>
@@ -406,5 +534,20 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnMoveCamera(InputAction.CallbackContext context);
+    }
+    /// <summary>
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Testing Mouse Camera" which allows adding and removing callbacks.
+    /// </summary>
+    /// <seealso cref="TestingMouseCameraActions.AddCallbacks(ITestingMouseCameraActions)" />
+    /// <seealso cref="TestingMouseCameraActions.RemoveCallbacks(ITestingMouseCameraActions)" />
+    public interface ITestingMouseCameraActions
+    {
+        /// <summary>
+        /// Method invoked when associated input action "ActivateMouseMovement" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnActivateMouseMovement(InputAction.CallbackContext context);
     }
 }
