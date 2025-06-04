@@ -61,6 +61,11 @@ public class MachineScriptTemplate : MonoBehaviour
                     mainLogicScript.OutputBag(input[0]);
                     input.RemoveAt(0);
                     return true;
+                // Belt
+                case 11:
+                    output.Add(input[1]);
+                    input.RemoveAt(1);
+                    return true;
             }
         }
         return false;
@@ -115,6 +120,12 @@ public class MachineScriptTemplate : MonoBehaviour
                 inputSize = 1;
                 outputSize = 0;
                 processingTime = 0.05f;
+                break;
+            // Belt
+            case 11:
+                inputSize = 1;
+                outputSize = 1;
+                processingTime = 0.1f;
                 break;
         }
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.PlayerLoop;
 using UnityEngine.UIElements;
 
@@ -25,6 +26,9 @@ public class MainLogicScript : MonoBehaviour
     [SerializeField] private GameObject machineLogicParent;
     [SerializeField] private GameObject machineLogicPrefab;
     [SerializeField] private List<Bag> outputtedBags;
+    [SerializeField] private GameObject mainCamera;
+    [SerializeField] private float cameraSensitivity = 1;
+    private Controls controls;
 
     // Initialize grid values with empty squares in middle and special edges
     public void InitializeGridValues(int gridHeight, int gridWidth)
@@ -100,6 +104,7 @@ public class MainLogicScript : MonoBehaviour
         cell.GetComponent<SpriteRenderer>().sprite = cellRenderingSprites[spriteIndex];
     }
 
+    // Generate the correct script when a machine is required
     public void InitializeMachineLogic(int machineType)
     {
         GameObject machine = Instantiate(machineLogicPrefab, machineLogicParent.transform);
@@ -117,10 +122,14 @@ public class MainLogicScript : MonoBehaviour
     {
         InitializeGridValues(50, 70);
         RenderGrid();
+        // Initilize input objects
+        controls = new();
+        controls.DefaultGameplay.Enable();
     }
 
     void FixedUpdate()
     {
-        
+        // Move Camera
+        mainCamera.GetComponent<CameraLogic>().MoveCamera(controls.DefaultGameplay.MoveCamera.ReadValue<Vector2>() * cameraSensitivity);
     }
 }
