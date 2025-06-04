@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Animations;
 using UnityEngine.InputSystem;
 using UnityEngine.PlayerLoop;
 using UnityEngine.UIElements;
@@ -28,6 +29,7 @@ public class MainLogicScript : MonoBehaviour
     [SerializeField] private List<Bag> outputtedBags;
     [SerializeField] private GameObject mainCamera;
     [SerializeField] private float cameraSensitivity = 1;
+    [SerializeField] private float zoomSensitivty = 10;
     private Controls controls;
 
     // Initialize grid values with empty squares in middle and special edges
@@ -58,7 +60,7 @@ public class MainLogicScript : MonoBehaviour
     }
 
     // Changed cell value at inputed position to inputed value if the cell is empty
-    public void EditEmptyCellValue(int x, int y, int value, bool render=false)
+    public void EditEmptyCellValue(int x, int y, int value, bool render = false)
     {
         if (gridValues[x, y] == 0)
         {
@@ -131,6 +133,11 @@ public class MainLogicScript : MonoBehaviour
     void FixedUpdate()
     {
         // Move Camera
-        mainCamera.GetComponent<CameraLogic>().MoveCamera(controls.DefaultGameplay.MoveCamera.ReadValue<Vector2>() * cameraSensitivity);
+        mainCamera.GetComponent<CameraLogic>().MoveCamera(controls.DefaultGameplay.MoveCamera.ReadValue<Vector2>() * cameraSensitivity, true);
+    }
+
+    void Update()
+    {
+        mainCamera.GetComponent<CameraLogic>().ZoomCamera(controls.DefaultGameplay.ZoomCamera.ReadValue<Vector2>().y * Time.deltaTime * zoomSensitivty);
     }
 }

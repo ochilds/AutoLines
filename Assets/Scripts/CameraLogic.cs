@@ -10,6 +10,7 @@ public class CameraLogic : MonoBehaviour
     private Vector2 positionOfMouseWhenMovementStart;
     private Controls controls;
     private bool mouseMovementActive = false;
+    [SerializeField] float moveSpeed = 1;
 
     void Start()
     {
@@ -22,27 +23,37 @@ public class CameraLogic : MonoBehaviour
         controls.TestingMouseCamera.ActivateMouseMovement.canceled += DeactivateCameraMovement;
     }
 
-    public void MoveCamera(Vector2 value)
+    public void MoveCamera(Vector2 value, bool movingWRespectToZoom = false)
     {
-        // Move the camera
-        transform.Translate(value);
-        // Snap back in bound if outside of bounds
-        if (transform.position.x > xBounds - 9)
+        // Move the camera with respect to the zoom
+        if (movingWRespectToZoom)
         {
-            transform.Translate(Vector2.right * (xBounds - 9 - transform.position.x));
+            transform.Translate(camera.orthographicSize * moveSpeed * value);
+
         }
-        if (transform.position.x < -xBounds + 9)
+        else
         {
-            transform.Translate(Vector2.left * (xBounds - 9 + transform.position.x));
+            transform.Translate(value);
         }
-        if (transform.position.y > yBounds)
-        {
-            transform.Translate(Vector2.up * (yBounds - transform.position.y));
-        }
-        if (transform.position.y < -yBounds + 10)
-        {
-            transform.Translate(Vector2.down * (yBounds - 10 + transform.position.y));
-        }
+        // // Snap back in bound if outside of bounds
+        // float cameraHeight = camera.orthographicSize;
+        // float cameraWidth = camera.orthographicSize * camera.aspect;
+        // if (transform.position.x > xBounds - cameraWidth)
+        // {
+        //     transform.Translate(Vector2.right * (xBounds - cameraWidth - transform.position.x));
+        // }
+        // if (transform.position.x < -xBounds + cameraWidth)
+        // {
+        //     transform.Translate(Vector2.left * (xBounds - cameraWidth + transform.position.x));
+        // }
+        // if (transform.position.y > yBounds - 5)
+        // {
+        //     transform.Translate(Vector2.up * (yBounds - 5 - transform.position.y));
+        // }
+        // if (transform.position.y < -yBounds + cameraHeight + 5)
+        // {
+        //     transform.Translate(Vector2.down * (yBounds - cameraHeight - 5 + transform.position.y));
+        // }
     }
 
     public void SetCameraBounds(Vector2 bounds)
@@ -61,6 +72,12 @@ public class CameraLogic : MonoBehaviour
     public void DeactivateCameraMovement(InputAction.CallbackContext context)
     {
         mouseMovementActive = false;
+    }
+
+    // Add the mouse scroll delta to camera zoom (Scroll is oppisite direct to zoom)
+    public void ZoomCamera(float amount)
+    {
+        camera.orthographicSize -= amount;
     }
 
     void Update()
