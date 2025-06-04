@@ -27,22 +27,29 @@ public class CameraLogic : MonoBehaviour
         // Move the camera
         transform.Translate(value);
         // Snap back in bound if outside of bounds
-        if (transform.position.x > xBounds)
+        if (transform.position.x > xBounds - 9)
         {
-            transform.Translate(Vector2.right * (xBounds - transform.position.x));
+            transform.Translate(Vector2.right * (xBounds - 9 - transform.position.x));
         }
-        if (transform.position.x < -xBounds)
+        if (transform.position.x < -xBounds + 9)
         {
-            transform.Translate(Vector2.left * (xBounds + transform.position.x));
+            transform.Translate(Vector2.left * (xBounds - 9 + transform.position.x));
         }
         if (transform.position.y > yBounds)
         {
             transform.Translate(Vector2.up * (yBounds - transform.position.y));
         }
-        if (transform.position.y < -yBounds)
+        if (transform.position.y < -yBounds + 10)
         {
-            transform.Translate(Vector2.down * (yBounds + transform.position.y));
+            transform.Translate(Vector2.down * (yBounds - 10 + transform.position.y));
         }
+    }
+
+    public void SetCameraBounds(Vector2 bounds)
+    {
+        // Set the bounds (The dimesions are flipped)
+        yBounds = bounds.x;
+        xBounds = bounds.y;
     }
 
     public void ActivateCameraMovement(InputAction.CallbackContext context)
@@ -61,7 +68,6 @@ public class CameraLogic : MonoBehaviour
         if (mouseMovementActive)
         {
             Vector2 mousePosition = (Vector2)camera.ScreenToWorldPoint(Input.mousePosition);
-            Debug.Log(positionOfMouseWhenMovementStart - mousePosition);
             MoveCamera(positionOfMouseWhenMovementStart - mousePosition);
         }
     }

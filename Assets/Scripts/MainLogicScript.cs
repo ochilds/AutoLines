@@ -120,11 +120,12 @@ public class MainLogicScript : MonoBehaviour
 
     void Start()
     {
-        InitializeGridValues(50, 70);
+        InitializeGridValues(25, 35);
+        mainCamera.GetComponent<CameraLogic>().SetCameraBounds(gridDimensions / 2);
         RenderGrid();
         // Initilize input objects
         controls = new();
-        // controls.DefaultGameplay.Enable();
+        controls.DefaultGameplay.Enable();
     }
 
     void FixedUpdate()
