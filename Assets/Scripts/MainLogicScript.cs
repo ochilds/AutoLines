@@ -30,6 +30,7 @@ public class MainLogicScript : MonoBehaviour
     [SerializeField] private GameObject mainCamera;
     [SerializeField] private float cameraSensitivity = 1;
     [SerializeField] private float zoomSensitivty = 10;
+    [SerializeField] private GameObject cursorRenderer;
     private Controls controls;
 
     // Initialize grid values with empty squares in middle and special edges
