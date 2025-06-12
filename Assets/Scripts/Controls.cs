@@ -92,13 +92,13 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             ""id"": ""cd36f807-016f-4d7e-9bcc-8e7a9d2b7eb5"",
             ""actions"": [
                 {
-                    ""name"": ""Move Camera"",
-                    ""type"": ""Value"",
-                    ""id"": ""c241b72d-1fdf-46f7-be7e-56ff552093bf"",
-                    ""expectedControlType"": ""Vector2"",
+                    ""name"": ""ActivateMouseMovement"",
+                    ""type"": ""Button"",
+                    ""id"": ""bac1e2fb-7be6-4f4a-b480-3ff7c04339e3"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": true
+                    ""initialStateCheck"": false
                 },
                 {
                     ""name"": ""Zoom Camera"",
@@ -108,119 +108,36 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Place Machine"",
+                    ""type"": ""Button"",
+                    ""id"": ""420f6cfd-b996-49bc-b199-17629b0c1a5c"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Next Machine"",
+                    ""type"": ""Button"",
+                    ""id"": ""09d13509-4135-4337-b18b-7cac7a6e99c7"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Previous Machine"",
+                    ""type"": ""Button"",
+                    ""id"": ""66bf41c2-f701-405e-837d-15acfb376069"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
-                {
-                    ""name"": ""2D Vector"",
-                    ""id"": ""c87554bb-f8fd-4e70-bd3b-0e3b653d8908"",
-                    ""path"": ""2DVector"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move Camera"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""e5433674-c426-41a4-a02d-e63989047b54"",
-                    ""path"": ""<Keyboard>/w"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move Camera"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""e5c8cb85-f610-45e7-b773-e97ebf712e7f"",
-                    ""path"": ""<Keyboard>/s"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move Camera"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""75c37edf-26c5-4db3-b12a-058069cf8d32"",
-                    ""path"": ""<Keyboard>/a"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move Camera"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""18a375e6-590a-4d88-8337-b2e60012084f"",
-                    ""path"": ""<Keyboard>/d"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move Camera"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""2D Vector"",
-                    ""id"": ""674d1b85-2ef7-4052-8475-29b04e65d1d7"",
-                    ""path"": ""2DVector"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move Camera"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""86bf0b29-9364-493c-9d49-4efe64d1d0e2"",
-                    ""path"": ""<Keyboard>/upArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move Camera"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""9165f6a1-d3cc-406c-8328-6ab48cfcd823"",
-                    ""path"": ""<Keyboard>/downArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move Camera"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""0be669b4-bf17-4b4a-957e-525dc6735a70"",
-                    ""path"": ""<Keyboard>/leftArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move Camera"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""84122bd1-ae3c-41a1-bb74-b69214f11ed2"",
-                    ""path"": ""<Keyboard>/rightArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move Camera"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
                 {
                     ""name"": """",
                     ""id"": ""4a6a23cc-aec3-42e0-86bb-bca711e970c5"",
@@ -231,27 +148,43 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""Zoom Camera"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                }
-            ]
-        },
-        {
-            ""name"": ""Testing Mouse Camera"",
-            ""id"": ""55dd9274-f9cf-41b2-ba2f-650ba004eaec"",
-            ""actions"": [
-                {
-                    ""name"": ""ActivateMouseMovement"",
-                    ""type"": ""Button"",
-                    ""id"": ""25255082-92e6-4b91-9ac5-ab632fbde817"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                }
-            ],
-            ""bindings"": [
+                },
                 {
                     ""name"": """",
-                    ""id"": ""58d69ae6-cdb6-418f-af13-7e45218237b4"",
+                    ""id"": ""20acc8c6-b4e1-4305-9eef-42d41bf81638"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Place Machine"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8ec301d1-2d60-4370-b5a1-e3ca6fd07e71"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Next Machine"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c8834387-d2ec-4833-9095-309de1035b9a"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Previous Machine"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""120c8f07-fd0f-41c0-8632-b2fe3ba3702b"",
                     ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -267,17 +200,16 @@ public partial class @Controls: IInputActionCollection2, IDisposable
 }");
         // Default Gameplay
         m_DefaultGameplay = asset.FindActionMap("Default Gameplay", throwIfNotFound: true);
-        m_DefaultGameplay_MoveCamera = m_DefaultGameplay.FindAction("Move Camera", throwIfNotFound: true);
+        m_DefaultGameplay_ActivateMouseMovement = m_DefaultGameplay.FindAction("ActivateMouseMovement", throwIfNotFound: true);
         m_DefaultGameplay_ZoomCamera = m_DefaultGameplay.FindAction("Zoom Camera", throwIfNotFound: true);
-        // Testing Mouse Camera
-        m_TestingMouseCamera = asset.FindActionMap("Testing Mouse Camera", throwIfNotFound: true);
-        m_TestingMouseCamera_ActivateMouseMovement = m_TestingMouseCamera.FindAction("ActivateMouseMovement", throwIfNotFound: true);
+        m_DefaultGameplay_PlaceMachine = m_DefaultGameplay.FindAction("Place Machine", throwIfNotFound: true);
+        m_DefaultGameplay_NextMachine = m_DefaultGameplay.FindAction("Next Machine", throwIfNotFound: true);
+        m_DefaultGameplay_PreviousMachine = m_DefaultGameplay.FindAction("Previous Machine", throwIfNotFound: true);
     }
 
     ~@Controls()
     {
         UnityEngine.Debug.Assert(!m_DefaultGameplay.enabled, "This will cause a leak and performance issues, Controls.DefaultGameplay.Disable() has not been called.");
-        UnityEngine.Debug.Assert(!m_TestingMouseCamera.enabled, "This will cause a leak and performance issues, Controls.TestingMouseCamera.Disable() has not been called.");
     }
 
     /// <summary>
@@ -353,8 +285,11 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     // Default Gameplay
     private readonly InputActionMap m_DefaultGameplay;
     private List<IDefaultGameplayActions> m_DefaultGameplayActionsCallbackInterfaces = new List<IDefaultGameplayActions>();
-    private readonly InputAction m_DefaultGameplay_MoveCamera;
+    private readonly InputAction m_DefaultGameplay_ActivateMouseMovement;
     private readonly InputAction m_DefaultGameplay_ZoomCamera;
+    private readonly InputAction m_DefaultGameplay_PlaceMachine;
+    private readonly InputAction m_DefaultGameplay_NextMachine;
+    private readonly InputAction m_DefaultGameplay_PreviousMachine;
     /// <summary>
     /// Provides access to input actions defined in input action map "Default Gameplay".
     /// </summary>
@@ -367,13 +302,25 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         /// </summary>
         public DefaultGameplayActions(@Controls wrapper) { m_Wrapper = wrapper; }
         /// <summary>
-        /// Provides access to the underlying input action "DefaultGameplay/MoveCamera".
+        /// Provides access to the underlying input action "DefaultGameplay/ActivateMouseMovement".
         /// </summary>
-        public InputAction @MoveCamera => m_Wrapper.m_DefaultGameplay_MoveCamera;
+        public InputAction @ActivateMouseMovement => m_Wrapper.m_DefaultGameplay_ActivateMouseMovement;
         /// <summary>
         /// Provides access to the underlying input action "DefaultGameplay/ZoomCamera".
         /// </summary>
         public InputAction @ZoomCamera => m_Wrapper.m_DefaultGameplay_ZoomCamera;
+        /// <summary>
+        /// Provides access to the underlying input action "DefaultGameplay/PlaceMachine".
+        /// </summary>
+        public InputAction @PlaceMachine => m_Wrapper.m_DefaultGameplay_PlaceMachine;
+        /// <summary>
+        /// Provides access to the underlying input action "DefaultGameplay/NextMachine".
+        /// </summary>
+        public InputAction @NextMachine => m_Wrapper.m_DefaultGameplay_NextMachine;
+        /// <summary>
+        /// Provides access to the underlying input action "DefaultGameplay/PreviousMachine".
+        /// </summary>
+        public InputAction @PreviousMachine => m_Wrapper.m_DefaultGameplay_PreviousMachine;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -400,12 +347,21 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_DefaultGameplayActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_DefaultGameplayActionsCallbackInterfaces.Add(instance);
-            @MoveCamera.started += instance.OnMoveCamera;
-            @MoveCamera.performed += instance.OnMoveCamera;
-            @MoveCamera.canceled += instance.OnMoveCamera;
+            @ActivateMouseMovement.started += instance.OnActivateMouseMovement;
+            @ActivateMouseMovement.performed += instance.OnActivateMouseMovement;
+            @ActivateMouseMovement.canceled += instance.OnActivateMouseMovement;
             @ZoomCamera.started += instance.OnZoomCamera;
             @ZoomCamera.performed += instance.OnZoomCamera;
             @ZoomCamera.canceled += instance.OnZoomCamera;
+            @PlaceMachine.started += instance.OnPlaceMachine;
+            @PlaceMachine.performed += instance.OnPlaceMachine;
+            @PlaceMachine.canceled += instance.OnPlaceMachine;
+            @NextMachine.started += instance.OnNextMachine;
+            @NextMachine.performed += instance.OnNextMachine;
+            @NextMachine.canceled += instance.OnNextMachine;
+            @PreviousMachine.started += instance.OnPreviousMachine;
+            @PreviousMachine.performed += instance.OnPreviousMachine;
+            @PreviousMachine.canceled += instance.OnPreviousMachine;
         }
 
         /// <summary>
@@ -417,12 +373,21 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         /// <seealso cref="DefaultGameplayActions" />
         private void UnregisterCallbacks(IDefaultGameplayActions instance)
         {
-            @MoveCamera.started -= instance.OnMoveCamera;
-            @MoveCamera.performed -= instance.OnMoveCamera;
-            @MoveCamera.canceled -= instance.OnMoveCamera;
+            @ActivateMouseMovement.started -= instance.OnActivateMouseMovement;
+            @ActivateMouseMovement.performed -= instance.OnActivateMouseMovement;
+            @ActivateMouseMovement.canceled -= instance.OnActivateMouseMovement;
             @ZoomCamera.started -= instance.OnZoomCamera;
             @ZoomCamera.performed -= instance.OnZoomCamera;
             @ZoomCamera.canceled -= instance.OnZoomCamera;
+            @PlaceMachine.started -= instance.OnPlaceMachine;
+            @PlaceMachine.performed -= instance.OnPlaceMachine;
+            @PlaceMachine.canceled -= instance.OnPlaceMachine;
+            @NextMachine.started -= instance.OnNextMachine;
+            @NextMachine.performed -= instance.OnNextMachine;
+            @NextMachine.canceled -= instance.OnNextMachine;
+            @PreviousMachine.started -= instance.OnPreviousMachine;
+            @PreviousMachine.performed -= instance.OnPreviousMachine;
+            @PreviousMachine.canceled -= instance.OnPreviousMachine;
         }
 
         /// <summary>
@@ -456,102 +421,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     /// Provides a new <see cref="DefaultGameplayActions" /> instance referencing this action map.
     /// </summary>
     public DefaultGameplayActions @DefaultGameplay => new DefaultGameplayActions(this);
-
-    // Testing Mouse Camera
-    private readonly InputActionMap m_TestingMouseCamera;
-    private List<ITestingMouseCameraActions> m_TestingMouseCameraActionsCallbackInterfaces = new List<ITestingMouseCameraActions>();
-    private readonly InputAction m_TestingMouseCamera_ActivateMouseMovement;
-    /// <summary>
-    /// Provides access to input actions defined in input action map "Testing Mouse Camera".
-    /// </summary>
-    public struct TestingMouseCameraActions
-    {
-        private @Controls m_Wrapper;
-
-        /// <summary>
-        /// Construct a new instance of the input action map wrapper class.
-        /// </summary>
-        public TestingMouseCameraActions(@Controls wrapper) { m_Wrapper = wrapper; }
-        /// <summary>
-        /// Provides access to the underlying input action "TestingMouseCamera/ActivateMouseMovement".
-        /// </summary>
-        public InputAction @ActivateMouseMovement => m_Wrapper.m_TestingMouseCamera_ActivateMouseMovement;
-        /// <summary>
-        /// Provides access to the underlying input action map instance.
-        /// </summary>
-        public InputActionMap Get() { return m_Wrapper.m_TestingMouseCamera; }
-        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
-        public void Enable() { Get().Enable(); }
-        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
-        public void Disable() { Get().Disable(); }
-        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
-        public bool enabled => Get().enabled;
-        /// <summary>
-        /// Implicitly converts an <see ref="TestingMouseCameraActions" /> to an <see ref="InputActionMap" /> instance.
-        /// </summary>
-        public static implicit operator InputActionMap(TestingMouseCameraActions set) { return set.Get(); }
-        /// <summary>
-        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
-        /// </summary>
-        /// <param name="instance">Callback instance.</param>
-        /// <remarks>
-        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
-        /// </remarks>
-        /// <seealso cref="TestingMouseCameraActions" />
-        public void AddCallbacks(ITestingMouseCameraActions instance)
-        {
-            if (instance == null || m_Wrapper.m_TestingMouseCameraActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_TestingMouseCameraActionsCallbackInterfaces.Add(instance);
-            @ActivateMouseMovement.started += instance.OnActivateMouseMovement;
-            @ActivateMouseMovement.performed += instance.OnActivateMouseMovement;
-            @ActivateMouseMovement.canceled += instance.OnActivateMouseMovement;
-        }
-
-        /// <summary>
-        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
-        /// </summary>
-        /// <remarks>
-        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
-        /// </remarks>
-        /// <seealso cref="TestingMouseCameraActions" />
-        private void UnregisterCallbacks(ITestingMouseCameraActions instance)
-        {
-            @ActivateMouseMovement.started -= instance.OnActivateMouseMovement;
-            @ActivateMouseMovement.performed -= instance.OnActivateMouseMovement;
-            @ActivateMouseMovement.canceled -= instance.OnActivateMouseMovement;
-        }
-
-        /// <summary>
-        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="TestingMouseCameraActions.UnregisterCallbacks(ITestingMouseCameraActions)" />.
-        /// </summary>
-        /// <seealso cref="TestingMouseCameraActions.UnregisterCallbacks(ITestingMouseCameraActions)" />
-        public void RemoveCallbacks(ITestingMouseCameraActions instance)
-        {
-            if (m_Wrapper.m_TestingMouseCameraActionsCallbackInterfaces.Remove(instance))
-                UnregisterCallbacks(instance);
-        }
-
-        /// <summary>
-        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
-        /// </summary>
-        /// <remarks>
-        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
-        /// </remarks>
-        /// <seealso cref="TestingMouseCameraActions.AddCallbacks(ITestingMouseCameraActions)" />
-        /// <seealso cref="TestingMouseCameraActions.RemoveCallbacks(ITestingMouseCameraActions)" />
-        /// <seealso cref="TestingMouseCameraActions.UnregisterCallbacks(ITestingMouseCameraActions)" />
-        public void SetCallbacks(ITestingMouseCameraActions instance)
-        {
-            foreach (var item in m_Wrapper.m_TestingMouseCameraActionsCallbackInterfaces)
-                UnregisterCallbacks(item);
-            m_Wrapper.m_TestingMouseCameraActionsCallbackInterfaces.Clear();
-            AddCallbacks(instance);
-        }
-    }
-    /// <summary>
-    /// Provides a new <see cref="TestingMouseCameraActions" /> instance referencing this action map.
-    /// </summary>
-    public TestingMouseCameraActions @TestingMouseCamera => new TestingMouseCameraActions(this);
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Default Gameplay" which allows adding and removing callbacks.
     /// </summary>
@@ -560,12 +429,12 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     public interface IDefaultGameplayActions
     {
         /// <summary>
-        /// Method invoked when associated input action "Move Camera" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "ActivateMouseMovement" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnMoveCamera(InputAction.CallbackContext context);
+        void OnActivateMouseMovement(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "Zoom Camera" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
@@ -573,20 +442,26 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnZoomCamera(InputAction.CallbackContext context);
-    }
-    /// <summary>
-    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Testing Mouse Camera" which allows adding and removing callbacks.
-    /// </summary>
-    /// <seealso cref="TestingMouseCameraActions.AddCallbacks(ITestingMouseCameraActions)" />
-    /// <seealso cref="TestingMouseCameraActions.RemoveCallbacks(ITestingMouseCameraActions)" />
-    public interface ITestingMouseCameraActions
-    {
         /// <summary>
-        /// Method invoked when associated input action "ActivateMouseMovement" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "Place Machine" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnActivateMouseMovement(InputAction.CallbackContext context);
+        void OnPlaceMachine(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Next Machine" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnNextMachine(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Previous Machine" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnPreviousMachine(InputAction.CallbackContext context);
     }
 }

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 141f9f9c1911d7d41848fc7a911b3abc
+guid: 500121583909ea04d94b405c24bd8325
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2781557350607362481
-    second: GridSprites7_0
+      213: -1585212371610064082
+    second: BeltSprites_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: GridSprites7_0
+      name: BeltSprites_0
       rect:
         serializedVersion: 2
-        x: 287
-        y: 287
-        width: 66
-        height: 66
+        x: 0
+        y: 0
+        width: 128
+        height: 1024
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f46eba2b35ce569d0800000000000000
-      internalID: -2781557350607362481
+      spriteID: e2ba0a03fb1300ae0800000000000000
+      internalID: -1585212371610064082
       vertices: []
       indices: 
       edges: []

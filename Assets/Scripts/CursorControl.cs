@@ -3,7 +3,7 @@ using UnityEngine;
 public class CursorControl : MonoBehaviour
 {
     private SpriteRenderer spriteRenderer;
-    void Start()
+    void Awake()
     {
         // Initalize sprite renderer
         spriteRenderer = GetComponent<SpriteRenderer>();

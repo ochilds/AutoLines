@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -31,6 +32,8 @@ public class MainLogicScript : MonoBehaviour
     [SerializeField] private float cameraSensitivity = 1;
     [SerializeField] private float zoomSensitivty = 10;
     [SerializeField] private GameObject cursorRenderer;
+    [SerializeField] private int cursorSpriteIndex;
+    [SerializeField] private int[] validCursorSpriteIndexes;
     private Controls controls;
 
     // Initialize grid values with empty squares in middle and special edges
@@ -58,6 +61,11 @@ public class MainLogicScript : MonoBehaviour
             EditEmptyCellValue(0, y, 7);
             EditEmptyCellValue(gridWidth - 1, y, 8);
         }
+    }
+
+    public Vector2Int WorldPositionToGridPosition(Vector2 position)
+    {
+        return new Vector2Int((int)(position.y - gridOffset.y), (int)(position.x - gridOffset.x));
     }
 
     // Changed cell value at inputed position to inputed value if the cell is empty
@@ -121,6 +129,54 @@ public class MainLogicScript : MonoBehaviour
         outputtedBags.Add(bag);
     }
 
+    public void MoveCursor()
+    {
+        Vector2 mousePosition = (Vector2)mainCamera.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition);
+        Vector2 roundedMousePosition = new Vector2(Mathf.Round(mousePosition.x), Mathf.Round(mousePosition.y));
+        cursorRenderer.GetComponent<CursorControl>().SetPosition(roundedMousePosition);
+    }
+
+    public void SetCursorSprite()
+    {
+        cursorRenderer.GetComponent<CursorControl>().ChangeSprite(cellRenderingSprites[cursorSpriteIndex]);
+    }
+
+    public void PlaceMachineOnGrid(InputAction.CallbackContext context)
+    {
+        Vector2 mousePosition = (Vector2)mainCamera.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition);
+        Vector2 roundedMousePosition = new Vector2(Mathf.Round(mousePosition.x), Mathf.Round(mousePosition.y));
+        Vector2Int gridMousePosition = WorldPositionToGridPosition(roundedMousePosition);
+        EditEmptyCellValue(gridMousePosition.x, gridMousePosition.y, cursorSpriteIndex, true);
+    }
+
+    public void UpdateCursorSprite(int newSpriteIndex)
+    {
+        cursorSpriteIndex = newSpriteIndex;
+        SetCursorSprite();
+    }
+
+    public void NextMachineOnCursor(InputAction.CallbackContext context)
+    {
+        int currentValidIndex = Array.IndexOf(validCursorSpriteIndexes, cursorSpriteIndex);
+        if (currentValidIndex > validCursorSpriteIndexes.Count() - 2)
+        {
+            UpdateCursorSprite(validCursorSpriteIndexes[0]);
+            return;
+        }
+        UpdateCursorSprite(validCursorSpriteIndexes[currentValidIndex + 1]);
+    }
+
+    public void PreviousMachineOnCursor(InputAction.CallbackContext context)
+    {
+        int currentValidIndex = Array.IndexOf(validCursorSpriteIndexes, cursorSpriteIndex);
+        if (currentValidIndex == 0)
+        {
+            UpdateCursorSprite(validCursorSpriteIndexes[validCursorSpriteIndexes.Count()]);
+            return;
+        }
+        UpdateCursorSprite(validCursorSpriteIndexes[currentValidIndex - 1]);
+    }
+
     void Start()
     {
         InitializeGridValues(25, 35);
@@ -129,12 +185,16 @@ public class MainLogicScript : MonoBehaviour
         // Initilize input objects
         controls = new();
         controls.DefaultGameplay.Enable();
+        controls.DefaultGameplay.PlaceMachine.performed += PlaceMachineOnGrid;
+        controls.DefaultGameplay.NextMachine.performed += NextMachineOnCursor;
+        controls.DefaultGameplay.PreviousMachine.performed += PreviousMachineOnCursor;
+        SetCursorSprite();
+        // Debug
     }
 
     void FixedUpdate()
     {
-        // Move Camera
-        mainCamera.GetComponent<CameraLogic>().MoveCamera(controls.DefaultGameplay.MoveCamera.ReadValue<Vector2>() * cameraSensitivity, true);
+        MoveCursor();
     }
 
     void Update()

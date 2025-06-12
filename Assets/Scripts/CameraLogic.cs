@@ -18,9 +18,9 @@ public class CameraLogic : MonoBehaviour
         camera = GetComponent<Camera>();
         // Enable Input
         controls = new();
-        controls.TestingMouseCamera.Enable();
-        controls.TestingMouseCamera.ActivateMouseMovement.started += ActivateCameraMovement;
-        controls.TestingMouseCamera.ActivateMouseMovement.canceled += DeactivateCameraMovement;
+        controls.DefaultGameplay.Enable();
+        controls.DefaultGameplay.ActivateMouseMovement.started += ActivateCameraMovement;
+        controls.DefaultGameplay.ActivateMouseMovement.canceled += DeactivateCameraMovement;
     }
 
     public void MoveCamera(Vector2 value, bool movingWRespectToZoom = false)
