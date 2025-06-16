@@ -9,15 +9,19 @@ public class MachineScriptTemplate : MonoBehaviour
     [SerializeField] private int inputSize;
     [SerializeField] private int outputSize;
     [SerializeField] private float processingTime;
-    [SerializeField] private int machineType;
+    public int machineType;
     [SerializeField] private List<MachineScriptTemplate> connectedInputMachines;
-    [SerializeField] private List<MachineScriptTemplate> connectedOutputMachines;
+    [SerializeField] private MachineScriptTemplate connectedOutputMachine = null;
     private int inputMachineIndex;
     private int outputMachineIndex = 0;
     private float lastTimeProcessing;
+    public int inputAmount = 0;
+    public int outputAmount = 0;
 
     void Update()
     {
+        inputAmount = input.Count;
+        outputAmount = output.Count;
         // If there is at least one bag in input try processes it
         if (input.Count > 0)
         {
@@ -62,9 +66,12 @@ public class MachineScriptTemplate : MonoBehaviour
                     input.RemoveAt(0);
                     return true;
                 // Belt
-                case 11:
-                    output.Add(input[1]);
-                    input.RemoveAt(1);
+                case 11 or 12 or 13 or 14 or 15 or 16 or 17 or 18:
+                    if (input.Count > 0)
+                    {
+                        output.Add(input[0]);
+                        input.RemoveAt(0);
+                    }
                     return true;
             }
         }
@@ -78,21 +85,16 @@ public class MachineScriptTemplate : MonoBehaviour
         {
             return false;
         }
-        // Get the correct machine to output to
-        for (int i = outputMachineIndex; i != outputMachineIndex - 1; i++)
+        if (!ConnectedToOutput())
         {
-            if (i < connectedOutputMachines.Count)
-            {
-                i = 0;
-            }
-            MachineScriptTemplate machineToOutputTo = connectedOutputMachines[i];
-            // Output if succesful
-            if (machineToOutputTo.InputObject(output[0]))
-            {
-                output.RemoveAt(0);
-                outputMachineIndex += 1;
-                return true;
-            }
+            return false;
+        }
+        if (connectedOutputMachine.InputObject(output[0]))
+        {
+            Debug.Log("Outputted object from machine type " + machineType);
+            output.RemoveAt(0);
+            outputMachineIndex += 1;
+            return true;
         }
         return false;
     }
@@ -100,6 +102,21 @@ public class MachineScriptTemplate : MonoBehaviour
     public void SetMainLogicScript(MainLogicScript script)
     {
         mainLogicScript = script;
+    }
+
+    public void ConnectOutputMachine(MachineScriptTemplate machine)
+    {
+        connectedOutputMachine = machine;
+    }
+
+
+    public bool ConnectedToOutput()
+    {
+        if (connectedOutputMachine != null)
+        {
+            return true;
+        }
+        return false;
     }
 
     public void SetMachineType(int type)
@@ -118,11 +135,11 @@ public class MachineScriptTemplate : MonoBehaviour
             // Output block
             case 10:
                 inputSize = 1;
-                outputSize = 0;
+                outputSize = 1;
                 processingTime = 0.05f;
                 break;
             // Belt
-            case 11:
+            case 11 or 12 or 13 or 14 or 15 or 16 or 17 or 18:
                 inputSize = 1;
                 outputSize = 1;
                 processingTime = 0.1f;

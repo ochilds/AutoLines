@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Mono.Cecil;
 using Unity.Mathematics;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Animations;
 using UnityEngine.InputSystem;
@@ -27,13 +29,16 @@ public class MainLogicScript : MonoBehaviour
     [SerializeField] private Sprite[] cellRenderingSprites;
     [SerializeField] private GameObject machineLogicParent;
     [SerializeField] private GameObject machineLogicPrefab;
-    [SerializeField] private List<Bag> outputtedBags;
+    [SerializeField] private List<Bag> outputtedBags = new();
     [SerializeField] private GameObject mainCamera;
     [SerializeField] private float cameraSensitivity = 1;
     [SerializeField] private float zoomSensitivty = 10;
     [SerializeField] private GameObject cursorRenderer;
     [SerializeField] private int cursorSpriteIndex;
     [SerializeField] private int[] validCursorSpriteIndexes;
+    private Dictionary<int, int[]> machineOutputDirection = new();
+    private Dictionary<Vector2Int, MachineScriptTemplate> machineScriptLookup = new();
+    private int FUNCTIONSPRITECUTOFF = 8;
     private Controls controls;
 
     // Initialize grid values with empty squares in middle and special edges
@@ -74,14 +79,14 @@ public class MainLogicScript : MonoBehaviour
         if (gridValues[x, y] == 0)
         {
             gridValues[x, y] = value;
-        }
-        if (value > 8)
-        {
-            InitializeMachineLogic(value);
-        }
-        if (render)
-        {
-            RenderGrid();
+            if (value > FUNCTIONSPRITECUTOFF)
+            {
+                InitializeMachineLogic(value, x, y);
+            }
+            if (render)
+            {
+                RenderGrid();
+            }
         }
     }
 
@@ -116,16 +121,36 @@ public class MainLogicScript : MonoBehaviour
     }
 
     // Generate the correct script when a machine is required
-    public void InitializeMachineLogic(int machineType)
+    public void InitializeMachineLogic(int machineType, int xPos, int yPos)
     {
         GameObject machine = Instantiate(machineLogicPrefab, machineLogicParent.transform);
         MachineScriptTemplate script = machine.GetComponent<MachineScriptTemplate>();
         script.SetMachineType(machineType);
         script.SetMainLogicScript(GetComponent<MainLogicScript>());
+        machineScriptLookup.Add(new(xPos, yPos), script);
+        TryConnectAllMachines();
+    }
+
+    public void TryConnectAllMachines()
+    {
+        foreach (KeyValuePair<Vector2Int, MachineScriptTemplate> machinePosPair in machineScriptLookup)
+        {
+            MachineScriptTemplate machine = machinePosPair.Value;
+            if (!machine.ConnectedToOutput())
+            {
+                Vector2Int pos = machinePosPair.Key;
+                int[] outputDirection = machineOutputDirection[machine.machineType];
+                if (gridValues[pos.x + outputDirection[0], pos.y + outputDirection[1]] > FUNCTIONSPRITECUTOFF)
+                {
+                    machine.ConnectOutputMachine(machineScriptLookup[new Vector2Int(pos.x + outputDirection[0], pos.y + outputDirection[1])]);
+                }
+            }
+        }
     }
 
     public void OutputBag(Bag bag)
     {
+        Debug.Log("Outputted Bag");
         outputtedBags.Add(bag);
     }
 
@@ -171,10 +196,28 @@ public class MainLogicScript : MonoBehaviour
         int currentValidIndex = Array.IndexOf(validCursorSpriteIndexes, cursorSpriteIndex);
         if (currentValidIndex == 0)
         {
-            UpdateCursorSprite(validCursorSpriteIndexes[validCursorSpriteIndexes.Count()]);
+            UpdateCursorSprite(validCursorSpriteIndexes[validCursorSpriteIndexes.Count() - 1]);
             return;
         }
         UpdateCursorSprite(validCursorSpriteIndexes[currentValidIndex - 1]);
+    }
+
+    void InitializeOutputDirections()
+    {
+        int[] down = { -1, 0 };
+        int[] right = { 0, 1 };
+        int[] up = { 1, 0 };
+        int[] left = { 0, -1 };
+        machineOutputDirection.Add(9, down);
+        machineOutputDirection.Add(10, down);
+        machineOutputDirection.Add(11, right);
+        machineOutputDirection.Add(12, down);
+        machineOutputDirection.Add(13, left);
+        machineOutputDirection.Add(14, up);
+        machineOutputDirection.Add(15, up);
+        machineOutputDirection.Add(16, right);
+        machineOutputDirection.Add(17, down);
+        machineOutputDirection.Add(18, left);
     }
 
     void Start()
@@ -189,6 +232,7 @@ public class MainLogicScript : MonoBehaviour
         controls.DefaultGameplay.NextMachine.performed += NextMachineOnCursor;
         controls.DefaultGameplay.PreviousMachine.performed += PreviousMachineOnCursor;
         SetCursorSprite();
+        InitializeOutputDirections();
         // Debug
     }
 
