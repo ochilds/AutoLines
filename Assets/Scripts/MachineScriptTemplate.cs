@@ -1,11 +1,12 @@
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class MachineScriptTemplate : MonoBehaviour
 {
     [SerializeField] private MainLogicScript mainLogicScript;
-    [SerializeField] private List<Bag> input = new();
-    [SerializeField] private List<Bag> output = new();
+    [SerializeField] private List<BagAnimatorController> input = new();
+    [SerializeField] private List<BagAnimatorController> output = new();
     [SerializeField] private int inputSize;
     [SerializeField] private int outputSize;
     [SerializeField] private float processingTime;
@@ -15,13 +16,13 @@ public class MachineScriptTemplate : MonoBehaviour
     private int inputMachineIndex;
     private int outputMachineIndex = 0;
     private float lastTimeProcessing;
-    public int inputAmount = 0;
-    public int outputAmount = 0;
+    [SerializeField] private Vector2Int position;
+    private int inputSide;
+    private int outputSide;
+    [SerializeField] private GameObject bagPrefab;
 
     void Update()
     {
-        inputAmount = input.Count;
-        outputAmount = output.Count;
         // If there is at least one bag in input try processes it
         if (input.Count > 0)
         {
@@ -38,12 +39,24 @@ public class MachineScriptTemplate : MonoBehaviour
         OutputObject();
     }
 
-    public bool InputObject(Bag bag)
+    public void UpdatePosition(Vector2Int newPos)
     {
-        // Only add bag if there is room in input
-        if (input.Count < inputSize)
+        position = new Vector2Int(newPos.y, newPos.x);
+    }
+
+    public void SetBagPrefab(GameObject prefab)
+    {
+        bagPrefab = prefab;
+    }
+
+    public bool InputObject(BagAnimatorController bag)
+    {
+        // Only add bag if there is room
+        if (input.Count + output.Count < inputSize)
         {
             input.Add(bag);
+            bag.transform.position = new Vector3(position.x, position.y, -1);
+            bag.SetPosition(position);
             return true;
         }
         return false;
@@ -58,7 +71,11 @@ public class MachineScriptTemplate : MonoBehaviour
             {
                 // Input block
                 case 9:
-                    output.Add(new());
+                    GameObject newBag = Instantiate(bagPrefab);
+                    newBag.transform.position = new Vector3(position.x, position.y, -1);
+                    BagAnimatorController script = newBag.GetComponent<BagAnimatorController>();
+                    output.Add(script);
+                    script.SetMainLogicScript(mainLogicScript);
                     return true;
                 // Output block
                 case 10:
@@ -109,6 +126,10 @@ public class MachineScriptTemplate : MonoBehaviour
         connectedOutputMachine = machine;
     }
 
+    public Vector3 GetAnimationIndex()
+    {
+        return new Vector3(inputSide, outputSide, processingTime);
+    }
 
     public bool ConnectedToOutput()
     {
@@ -128,21 +149,60 @@ public class MachineScriptTemplate : MonoBehaviour
             case 9:
                 inputSize = 1;
                 outputSize = 1;
-                processingTime = 1;
+                processingTime = 3;
                 // Create new empty bag for control
-                InputObject(new Bag());
+                input.Add(new());
                 break;
             // Output block
             case 10:
                 inputSize = 1;
                 outputSize = 1;
-                processingTime = 0.05f;
+                processingTime = 0.005f;
                 break;
             // Belt
             case 11 or 12 or 13 or 14 or 15 or 16 or 17 or 18:
                 inputSize = 1;
                 outputSize = 1;
-                processingTime = 0.1f;
+                processingTime = 0.5f;
+                break;
+        }
+        switch (machineType)
+        {
+            case 10:
+                inputSide = 0;
+                outputSide = 2;
+                break;
+            case 11:
+                inputSide = 3;
+                outputSide = 1;
+                break;
+            case 12:
+                inputSide = 0;
+                outputSide = 2;
+                break;
+            case 13:
+                inputSide = 1;
+                outputSide = 3;
+                break;
+            case 14:
+                inputSide = 2;
+                outputSide = 0;
+                break;
+            case 15:
+                inputSide = 3;
+                outputSide = 0;
+                break;
+            case 16:
+                inputSide = 0;
+                outputSide = 1;
+                break;
+            case 17:
+                inputSide = 1;
+                outputSide = 2;
+                break;
+            case 18:
+                inputSide = 2;
+                outputSide = 3;
                 break;
         }
     }

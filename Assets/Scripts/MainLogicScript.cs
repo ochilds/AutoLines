@@ -11,14 +11,6 @@ using UnityEngine.InputSystem;
 using UnityEngine.PlayerLoop;
 using UnityEngine.UIElements;
 
-public class Bag
-{
-    public Bag()
-    {
-        
-    }
-}
-
 public class MainLogicScript : MonoBehaviour
 {
     private int[,] gridValues;
@@ -29,7 +21,7 @@ public class MainLogicScript : MonoBehaviour
     [SerializeField] private Sprite[] cellRenderingSprites;
     [SerializeField] private GameObject machineLogicParent;
     [SerializeField] private GameObject machineLogicPrefab;
-    [SerializeField] private List<Bag> outputtedBags = new();
+    [SerializeField] private List<BagAnimatorController> outputtedBags = new();
     [SerializeField] private GameObject mainCamera;
     [SerializeField] private float cameraSensitivity = 1;
     [SerializeField] private float zoomSensitivty = 10;
@@ -40,6 +32,9 @@ public class MainLogicScript : MonoBehaviour
     private Dictionary<Vector2Int, MachineScriptTemplate> machineScriptLookup = new();
     private int FUNCTIONSPRITECUTOFF = 8;
     private Controls controls;
+    [SerializeField] private int bagsRequiredToEndStage;
+    private bool finished = false;
+    [SerializeField] private GameObject bagPrefab;
 
     // Initialize grid values with empty squares in middle and special edges
     public void InitializeGridValues(int gridHeight, int gridWidth)
@@ -127,7 +122,10 @@ public class MainLogicScript : MonoBehaviour
         MachineScriptTemplate script = machine.GetComponent<MachineScriptTemplate>();
         script.SetMachineType(machineType);
         script.SetMainLogicScript(GetComponent<MainLogicScript>());
+        script.UpdatePosition(new Vector2Int((int)(xPos + gridOffset.y), (int)(yPos + gridOffset.x)));
+        script.SetBagPrefab(bagPrefab);
         machineScriptLookup.Add(new(xPos, yPos), script);
+        Debug.Log("Added new key to machine script lookup " + new Vector2Int(xPos, yPos));
         TryConnectAllMachines();
     }
 
@@ -148,10 +146,17 @@ public class MainLogicScript : MonoBehaviour
         }
     }
 
-    public void OutputBag(Bag bag)
+    public Vector3 GetMachineAnimationAtPosition(Vector2Int pos)
+    {
+        MachineScriptTemplate machine = machineScriptLookup[WorldPositionToGridPosition(pos)];
+        return machine.GetAnimationIndex();
+    }
+
+    public void OutputBag(BagAnimatorController bag)
     {
         Debug.Log("Outputted Bag");
         outputtedBags.Add(bag);
+        Destroy(bag.gameObject);
     }
 
     public void MoveCursor()
@@ -244,5 +249,9 @@ public class MainLogicScript : MonoBehaviour
     void Update()
     {
         mainCamera.GetComponent<CameraLogic>().ZoomCamera(controls.DefaultGameplay.ZoomCamera.ReadValue<Vector2>().y * Time.deltaTime * zoomSensitivty);
+        if (outputtedBags.Count > bagsRequiredToEndStage)
+        {
+            finished = true;
+        }
     }
 }
