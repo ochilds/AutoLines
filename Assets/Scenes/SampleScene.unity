@@ -152,34 +152,38 @@ MonoBehaviour:
   cellRenderingParent: {fileID: 639895282}
   cellRenderingSpritePrefab: {fileID: 4049677247267017472, guid: bae683657c176204e97462a2fd30fce2, type: 3}
   cellRenderingSprites:
-  - {fileID: -46358243, guid: d7c97e9e8ee8b9743a30066b719fadcc, type: 3}
-  - {fileID: 720324962, guid: d7c97e9e8ee8b9743a30066b719fadcc, type: 3}
+  - {fileID: -1552253370, guid: d7c97e9e8ee8b9743a30066b719fadcc, type: 3}
+  - {fileID: 1616126932, guid: d7c97e9e8ee8b9743a30066b719fadcc, type: 3}
   - {fileID: 680766005, guid: d7c97e9e8ee8b9743a30066b719fadcc, type: 3}
   - {fileID: -91230208, guid: d7c97e9e8ee8b9743a30066b719fadcc, type: 3}
-  - {fileID: 1616126932, guid: d7c97e9e8ee8b9743a30066b719fadcc, type: 3}
-  - {fileID: 1216364339, guid: d7c97e9e8ee8b9743a30066b719fadcc, type: 3}
-  - {fileID: -1552253370, guid: d7c97e9e8ee8b9743a30066b719fadcc, type: 3}
-  - {fileID: -657610890, guid: d7c97e9e8ee8b9743a30066b719fadcc, type: 3}
-  - {fileID: 542362027, guid: d7c97e9e8ee8b9743a30066b719fadcc, type: 3}
-  - {fileID: -1709782161, guid: d7c97e9e8ee8b9743a30066b719fadcc, type: 3}
-  - {fileID: 18160515, guid: d7c97e9e8ee8b9743a30066b719fadcc, type: 3}
-  - {fileID: -129924367, guid: d7c97e9e8ee8b9743a30066b719fadcc, type: 3}
-  - {fileID: -974467259, guid: d7c97e9e8ee8b9743a30066b719fadcc, type: 3}
-  - {fileID: 66319546, guid: d7c97e9e8ee8b9743a30066b719fadcc, type: 3}
-  - {fileID: 1289043343, guid: d7c97e9e8ee8b9743a30066b719fadcc, type: 3}
-  - {fileID: 543030878, guid: d7c97e9e8ee8b9743a30066b719fadcc, type: 3}
-  - {fileID: 539870490, guid: d7c97e9e8ee8b9743a30066b719fadcc, type: 3}
   - {fileID: 181516047, guid: d7c97e9e8ee8b9743a30066b719fadcc, type: 3}
+  - {fileID: -46358243, guid: d7c97e9e8ee8b9743a30066b719fadcc, type: 3}
+  - {fileID: 1289043343, guid: d7c97e9e8ee8b9743a30066b719fadcc, type: 3}
+  - {fileID: 66319546, guid: d7c97e9e8ee8b9743a30066b719fadcc, type: 3}
+  - {fileID: 542362027, guid: d7c97e9e8ee8b9743a30066b719fadcc, type: 3}
+  - {fileID: 539870490, guid: d7c97e9e8ee8b9743a30066b719fadcc, type: 3}
+  - {fileID: 1357570780, guid: d7c97e9e8ee8b9743a30066b719fadcc, type: 3}
+  - {fileID: -129924367, guid: d7c97e9e8ee8b9743a30066b719fadcc, type: 3}
+  - {fileID: 1469029445, guid: d7c97e9e8ee8b9743a30066b719fadcc, type: 3}
+  - {fileID: -1709782161, guid: d7c97e9e8ee8b9743a30066b719fadcc, type: 3}
   - {fileID: -1834733006, guid: d7c97e9e8ee8b9743a30066b719fadcc, type: 3}
+  - {fileID: 543030878, guid: d7c97e9e8ee8b9743a30066b719fadcc, type: 3}
+  - {fileID: -1859757551, guid: d7c97e9e8ee8b9743a30066b719fadcc, type: 3}
+  - {fileID: 18160515, guid: d7c97e9e8ee8b9743a30066b719fadcc, type: 3}
+  - {fileID: 720324962, guid: d7c97e9e8ee8b9743a30066b719fadcc, type: 3}
+  - {fileID: -657610890, guid: d7c97e9e8ee8b9743a30066b719fadcc, type: 3}
+  - {fileID: 1216364339, guid: d7c97e9e8ee8b9743a30066b719fadcc, type: 3}
+  - {fileID: -2067112645, guid: d7c97e9e8ee8b9743a30066b719fadcc, type: 3}
+  - {fileID: -974467259, guid: d7c97e9e8ee8b9743a30066b719fadcc, type: 3}
   machineLogicParent: {fileID: 465160562}
   machineLogicPrefab: {fileID: 2837679201704155270, guid: 7168cea24587a444c80a08a5cf4069e9, type: 3}
   outputtedBags: []
   mainCamera: {fileID: 519420028}
   cameraSensitivity: 0.3
-  zoomSensitivty: 150
+  zoomSensitivty: 3
   cursorRenderer: {fileID: 1920147733}
   cursorSpriteIndex: 10
-  validCursorSpriteIndexes: 00000000090000000a0000000b0000000c0000000d0000000e0000000f000000100000001100000012000000
+  validCursorSpriteIndexes: 00000000090000000a0000000b0000000c0000000d0000000e0000000f00000010000000110000001200000013000000140000001500000016000000
   bagsRequiredToEndStage: 10
   bagPrefab: {fileID: 5353796599557870078, guid: 878be6fe2564c3b4283ded1560d191c3, type: 3}
 --- !u!4 &1024809

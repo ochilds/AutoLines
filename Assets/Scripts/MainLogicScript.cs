@@ -216,6 +216,10 @@ public class MainLogicScript : MonoBehaviour
         machineOutputDirection.Add(16, right);
         machineOutputDirection.Add(17, down);
         machineOutputDirection.Add(18, left);
+        machineOutputDirection.Add(19, down);
+        machineOutputDirection.Add(20, left);
+        machineOutputDirection.Add(21, up);
+        machineOutputDirection.Add(22, right);
     }
 
     void Start()
@@ -241,7 +245,7 @@ public class MainLogicScript : MonoBehaviour
 
     void Update()
     {
-        mainCamera.GetComponent<CameraLogic>().ZoomCamera(controls.DefaultGameplay.ZoomCamera.ReadValue<Vector2>().y * Time.deltaTime * zoomSensitivty);
+        mainCamera.GetComponent<CameraLogic>().ZoomCamera(controls.DefaultGameplay.ZoomCamera.ReadValue<Vector2>().y * zoomSensitivty);
         if (outputtedBags.Count > bagsRequiredToEndStage)
         {
             finished = true;

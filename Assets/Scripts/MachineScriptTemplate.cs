@@ -83,7 +83,7 @@ public class MachineScriptTemplate : MonoBehaviour
                     input.RemoveAt(0);
                     return true;
                 // Belt
-                case 11 or 12 or 13 or 14 or 15 or 16 or 17 or 18:
+                case 11 or 12 or 13 or 14 or 15 or 16 or 17 or 18 or 19 or 20 or 21 or 22:
                     if (input.Count > 0)
                     {
                         output.Add(input[0]);
@@ -160,7 +160,7 @@ public class MachineScriptTemplate : MonoBehaviour
                 processingTime = 0.005f;
                 break;
             // Belt
-            case 11 or 12 or 13 or 14 or 15 or 16 or 17 or 18:
+            case 11 or 12 or 13 or 14 or 15 or 16 or 17 or 18 or 19 or 20 or 21 or 22:
                 inputSize = 1;
                 outputSize = 1;
                 processingTime = 0.5f;
@@ -203,6 +203,22 @@ public class MachineScriptTemplate : MonoBehaviour
             case 18:
                 inputSide = 2;
                 outputSide = 3;
+                break;
+            case 19:
+                inputSide = 3;
+                outputSide = 2;
+                break;
+            case 20:
+                inputSide = 0;
+                outputSide = 3;
+                break;
+            case 21:
+                inputSide = 1;
+                outputSide = 0;
+                break;
+            case 22:
+                inputSide = 2;
+                outputSide = 1;
                 break;
         }
     }
