@@ -224,7 +224,13 @@ public class MainLogicScript : MonoBehaviour
 
     void Start()
     {
-        InitializeGridValues(25, 35);
+        // Debug
+    }
+
+    public void Initialize(Vector2Int gridSize)
+    {
+        // Times two to avoid off grid errors
+        InitializeGridValues(gridSize.x * 2 + 1, gridSize.y * 2 + 1);
         mainCamera.GetComponent<CameraLogic>().SetCameraBounds(gridDimensions / 2);
         RenderGrid();
         // Initilize input objects
@@ -235,7 +241,6 @@ public class MainLogicScript : MonoBehaviour
         controls.DefaultGameplay.PreviousMachine.performed += PreviousMachineOnCursor;
         SetCursorSprite();
         InitializeOutputDirections();
-        // Debug
     }
 
     void FixedUpdate()
