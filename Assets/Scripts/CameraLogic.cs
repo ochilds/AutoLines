@@ -11,6 +11,7 @@ public class CameraLogic : MonoBehaviour
     private Controls controls;
     private bool mouseMovementActive = false;
     [SerializeField] float moveSpeed = 1;
+    private bool paused = false;
 
     void Start()
     {
@@ -78,14 +79,30 @@ public class CameraLogic : MonoBehaviour
     public void ZoomCamera(float amount)
     {
         camera.orthographicSize -= amount;
+        if (camera.orthographicSize > 50)
+        {
+            camera.orthographicSize = 50;
+        }
+        if (camera.orthographicSize < 0.6f)
+        {
+            camera.orthographicSize = 0.6f;
+        }
+    }
+
+    public void PauseGame()
+    {
+        paused = !paused;
     }
 
     void Update()
     {
-        if (mouseMovementActive)
+        if (!paused)
         {
-            Vector2 mousePosition = (Vector2)camera.ScreenToWorldPoint(Input.mousePosition);
-            MoveCamera(positionOfMouseWhenMovementStart - mousePosition);
+            if (mouseMovementActive)
+            {
+                Vector2 mousePosition = (Vector2)camera.ScreenToWorldPoint(Input.mousePosition);
+                MoveCamera(positionOfMouseWhenMovementStart - mousePosition);
+            }
         }
     }
 }

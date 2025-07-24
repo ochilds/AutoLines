@@ -19,10 +19,8 @@ public class SceneManagerScript : MonoBehaviour
 
     private Dictionary<PuzzleSetup, string> setupLookup;
     private PuzzleSetup DEBUGPUZZLE = new(new() { { new(5, 5), 9 } }, new(10, 10));
-    [SerializeField]
-    private GameObject mainMenuFolder;
-    [SerializeField]
-    private GameObject levelSelectFolder;
+    [SerializeField] private GameObject mainMenuFolder;
+    [SerializeField] private GameObject levelSelectFolder;
 
     void Awake()
     {
@@ -45,6 +43,11 @@ public class SceneManagerScript : MonoBehaviour
     {
         SceneManager.LoadScene("Main Menu");
         mainMenuFolder.SetActive(true);
+    }
+
+    public void StopGame()
+    {
+        Application.Quit();
     }
 
     private IEnumerator LoadPuzzleStage(PuzzleSetup puzzle)

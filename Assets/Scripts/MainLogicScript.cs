@@ -14,12 +14,12 @@ public class MainLogicScript : MonoBehaviour
     [SerializeField] private Sprite[] cellRenderingSprites;
     [SerializeField] private GameObject machineLogicParent;
     [SerializeField] private GameObject machineLogicPrefab;
-    [SerializeField] private List<BagAnimatorController> outputtedBags = new();
+    private List<BagAnimatorController> outputtedBags = new();
     [SerializeField] private GameObject mainCamera;
     [SerializeField] private float cameraSensitivity = 1;
     [SerializeField] private float zoomSensitivty = 10;
     [SerializeField] private GameObject cursorRenderer;
-    [SerializeField] private int cursorSpriteIndex;
+    private int cursorSpriteIndex;
     [SerializeField] private int[] validCursorSpriteIndexes;
     private Dictionary<int, int[]> machineOutputDirection = new();
     private Dictionary<Vector2Int, MachineScriptTemplate> machineScriptLookup = new();
@@ -28,6 +28,8 @@ public class MainLogicScript : MonoBehaviour
     [SerializeField] private int bagsRequiredToEndStage;
     private bool finished = false;
     [SerializeField] private GameObject bagPrefab;
+    [SerializeField] private GameObject pauseScreenUI;
+    private bool paused = false;
 
     // Initialize grid values with empty squares in middle and special edges
     public void InitializeGridValues(int gridHeight, int gridWidth)
@@ -222,9 +224,29 @@ public class MainLogicScript : MonoBehaviour
         machineOutputDirection.Add(22, right);
     }
 
+    void PauseGame(InputAction.CallbackContext context)
+    {
+        if (!paused)
+        {
+            pauseScreenUI.SetActive(true);
+            paused = true;
+        }
+        else
+        {
+            pauseScreenUI.SetActive(false);
+            paused = false;
+        }
+        mainCamera.GetComponent<CameraLogic>().PauseGame();
+        foreach (MachineScriptTemplate machine in machineLogicParent.GetComponentsInChildren<MachineScriptTemplate>())
+        {
+            machine.PauseGame();
+        }
+    }
+
     void Start()
     {
         // Debug
+        Initialize(new Vector2Int(10, 10));
     }
 
     public void Initialize(Vector2Int gridSize)
@@ -239,21 +261,21 @@ public class MainLogicScript : MonoBehaviour
         controls.DefaultGameplay.PlaceMachine.performed += PlaceMachineOnGrid;
         controls.DefaultGameplay.NextMachine.performed += NextMachineOnCursor;
         controls.DefaultGameplay.PreviousMachine.performed += PreviousMachineOnCursor;
+        controls.DefaultGameplay.PauseGameplay.performed += PauseGame;
         SetCursorSprite();
         InitializeOutputDirections();
     }
 
-    void FixedUpdate()
-    {
-        MoveCursor();
-    }
-
     void Update()
     {
-        mainCamera.GetComponent<CameraLogic>().ZoomCamera(controls.DefaultGameplay.ZoomCamera.ReadValue<Vector2>().y * zoomSensitivty);
-        if (outputtedBags.Count > bagsRequiredToEndStage)
+        if (!paused)
         {
-            finished = true;
+            MoveCursor();
+            mainCamera.GetComponent<CameraLogic>().ZoomCamera(controls.DefaultGameplay.ZoomCamera.ReadValue<Vector2>().y * zoomSensitivty);
+            if (outputtedBags.Count > bagsRequiredToEndStage)
+            {
+                finished = true;
+            }
         }
     }
 }

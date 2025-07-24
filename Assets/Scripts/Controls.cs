@@ -135,6 +135,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause Gameplay"",
+                    ""type"": ""Button"",
+                    ""id"": ""67cbe4ff-c841-4996-aceb-87103c802c08"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -192,6 +201,17 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""ActivateMouseMovement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""424b3fa1-e5db-4875-9184-924e10f945d2"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause Gameplay"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -205,6 +225,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_DefaultGameplay_PlaceMachine = m_DefaultGameplay.FindAction("Place Machine", throwIfNotFound: true);
         m_DefaultGameplay_NextMachine = m_DefaultGameplay.FindAction("Next Machine", throwIfNotFound: true);
         m_DefaultGameplay_PreviousMachine = m_DefaultGameplay.FindAction("Previous Machine", throwIfNotFound: true);
+        m_DefaultGameplay_PauseGameplay = m_DefaultGameplay.FindAction("Pause Gameplay", throwIfNotFound: true);
     }
 
     ~@Controls()
@@ -290,6 +311,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_DefaultGameplay_PlaceMachine;
     private readonly InputAction m_DefaultGameplay_NextMachine;
     private readonly InputAction m_DefaultGameplay_PreviousMachine;
+    private readonly InputAction m_DefaultGameplay_PauseGameplay;
     /// <summary>
     /// Provides access to input actions defined in input action map "Default Gameplay".
     /// </summary>
@@ -321,6 +343,10 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "DefaultGameplay/PreviousMachine".
         /// </summary>
         public InputAction @PreviousMachine => m_Wrapper.m_DefaultGameplay_PreviousMachine;
+        /// <summary>
+        /// Provides access to the underlying input action "DefaultGameplay/PauseGameplay".
+        /// </summary>
+        public InputAction @PauseGameplay => m_Wrapper.m_DefaultGameplay_PauseGameplay;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -362,6 +388,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @PreviousMachine.started += instance.OnPreviousMachine;
             @PreviousMachine.performed += instance.OnPreviousMachine;
             @PreviousMachine.canceled += instance.OnPreviousMachine;
+            @PauseGameplay.started += instance.OnPauseGameplay;
+            @PauseGameplay.performed += instance.OnPauseGameplay;
+            @PauseGameplay.canceled += instance.OnPauseGameplay;
         }
 
         /// <summary>
@@ -388,6 +417,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @PreviousMachine.started -= instance.OnPreviousMachine;
             @PreviousMachine.performed -= instance.OnPreviousMachine;
             @PreviousMachine.canceled -= instance.OnPreviousMachine;
+            @PauseGameplay.started -= instance.OnPauseGameplay;
+            @PauseGameplay.performed -= instance.OnPauseGameplay;
+            @PauseGameplay.canceled -= instance.OnPauseGameplay;
         }
 
         /// <summary>
@@ -463,5 +495,12 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnPreviousMachine(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Pause Gameplay" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnPauseGameplay(InputAction.CallbackContext context);
     }
 }

@@ -20,23 +20,27 @@ public class MachineScriptTemplate : MonoBehaviour
     private int inputSide;
     private int outputSide;
     [SerializeField] private GameObject bagPrefab;
+    private bool paused = false;
 
     void Update()
     {
-        // If there is at least one bag in input try processes it
-        if (input.Count > 0)
+        if (!paused)
         {
-            lastTimeProcessing += Time.deltaTime;
-            if (lastTimeProcessing >= processingTime)
+            // If there is at least one bag in input try processes it
+            if (input.Count > 0)
             {
-                if (ProcessObject())
+                lastTimeProcessing += Time.deltaTime;
+                if (lastTimeProcessing >= processingTime)
                 {
-                    lastTimeProcessing = 0f;
+                    if (ProcessObject())
+                    {
+                        lastTimeProcessing = 0f;
+                    }
                 }
             }
+            // Try to output object
+            OutputObject();
         }
-        // Try to output object
-        OutputObject();
     }
 
     public void UpdatePosition(Vector2Int newPos)
@@ -138,6 +142,11 @@ public class MachineScriptTemplate : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    public void PauseGame()
+    {
+        paused = !paused;
     }
 
     public void SetMachineType(int type)
