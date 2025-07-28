@@ -18,7 +18,7 @@ public class SceneManagerScript : MonoBehaviour
 {
     private static SceneManagerScript instance;
     private Dictionary<PuzzleSetup, string> setupLookup;
-    private PuzzleSetup DEBUGPUZZLE = new(new() { { new(5, 5), 9 } }, new(10, 10));
+    private PuzzleSetup DEBUGPUZZLE = new(new() {  }, new(5, 6));
     [SerializeField] private GameObject mainMenuFolder;
     [SerializeField] private GameObject levelSelectFolder;
 

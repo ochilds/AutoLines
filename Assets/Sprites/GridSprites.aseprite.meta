@@ -390,7 +390,7 @@ ScriptedImporter:
       cellRect:
         x: 0
         y: 384
-        width: 384
+        width: 447
         height: 256
       spriteId: 6bc8317a4d3c02245b7e421d743dfbaf
     - name: Frame_1
@@ -398,9 +398,9 @@ ScriptedImporter:
       additiveSortOrder: 0
       cellRect:
         x: 288
-        y: 288
+        y: 287
         width: 64
-        height: 64
+        height: 65
       spriteId: 4926f71a568ac34478c57274aa7a6d79
     - name: Frame_2
       frameIndex: 2
