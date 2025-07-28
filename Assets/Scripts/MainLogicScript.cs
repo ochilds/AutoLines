@@ -30,6 +30,8 @@ public class MainLogicScript : MonoBehaviour
     [SerializeField] private GameObject bagPrefab;
     [SerializeField] private GameObject pauseScreenUI;
     private bool paused = false;
+    private SceneManagerScript sceneManager;
+    private bool initialized = false;
 
     // Initialize grid values with empty squares in middle and special edges
     public void InitializeGridValues(int gridHeight, int gridWidth)
@@ -224,17 +226,28 @@ public class MainLogicScript : MonoBehaviour
         machineOutputDirection.Add(22, right);
     }
 
-    void PauseGame(InputAction.CallbackContext context)
+    public void ButtonPauseGame()
+    {
+        PauseGame();
+    }
+
+    void PauseGame(InputAction.CallbackContext context = new())
     {
         if (!paused)
         {
             pauseScreenUI.SetActive(true);
             paused = true;
+            controls.DefaultGameplay.PlaceMachine.Disable();
+            controls.DefaultGameplay.NextMachine.Disable();
+            controls.DefaultGameplay.PreviousMachine.Disable();
         }
         else
         {
             pauseScreenUI.SetActive(false);
             paused = false;
+            controls.DefaultGameplay.PlaceMachine.Enable();
+            controls.DefaultGameplay.NextMachine.Enable();
+            controls.DefaultGameplay.PreviousMachine.Enable();
         }
         mainCamera.GetComponent<CameraLogic>().PauseGame();
         foreach (MachineScriptTemplate machine in machineLogicParent.GetComponentsInChildren<MachineScriptTemplate>())
@@ -243,14 +256,24 @@ public class MainLogicScript : MonoBehaviour
         }
     }
 
+    public void ReturnToMainMenu()
+    {
+        sceneManager.LoadMainMenuScene();
+    }
+
     void Start()
     {
         // Debug
-        Initialize(new Vector2Int(10, 10));
+        // if (!initialized)
+        // {
+        //     Initialize(new Vector2Int(10, 10));
+        // }
     }
 
     public void Initialize(Vector2Int gridSize)
     {
+        initialized = true;
+        sceneManager = GameObject.FindGameObjectWithTag("SceneManager").GetComponent<SceneManagerScript>();
         // Times two to avoid off grid errors
         InitializeGridValues(gridSize.x * 2 + 1, gridSize.y * 2 + 1);
         mainCamera.GetComponent<CameraLogic>().SetCameraBounds(gridDimensions / 2);

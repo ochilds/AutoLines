@@ -57,7 +57,7 @@ public class BagAnimatorController : MonoBehaviour
         int directionKey = (startSide * 10) + endSide;
         Debug.Log(animationNameLookup[directionKey]);
         animationController.Play(animationNameLookup[directionKey], 0);
-        animationController.speed = 1f / time;
+        // animationController.speed = 1f / time;
     }
 
     public void SetPosition(Vector2Int new_pos)

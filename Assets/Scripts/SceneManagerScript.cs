@@ -16,7 +16,7 @@ public class PuzzleSetup
 
 public class SceneManagerScript : MonoBehaviour
 {
-
+    private static SceneManagerScript instance;
     private Dictionary<PuzzleSetup, string> setupLookup;
     private PuzzleSetup DEBUGPUZZLE = new(new() { { new(5, 5), 9 } }, new(10, 10));
     [SerializeField] private GameObject mainMenuFolder;
@@ -24,6 +24,13 @@ public class SceneManagerScript : MonoBehaviour
 
     void Awake()
     {
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        instance = this;
+
         DontDestroyOnLoad(this);
     }
 
@@ -42,7 +49,7 @@ public class SceneManagerScript : MonoBehaviour
     public void LoadMainMenuScene()
     {
         SceneManager.LoadScene("Main Menu");
-        mainMenuFolder.SetActive(true);
+        Destroy(gameObject);
     }
 
     public void StopGame()
