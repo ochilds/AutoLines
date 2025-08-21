@@ -144,6 +144,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Rotate Machine"",
+                    ""type"": ""Button"",
+                    ""id"": ""c4e2c9c9-4bb8-4855-bbed-f3185e33970e"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -212,6 +221,17 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""Pause Gameplay"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""478a3915-34b9-4866-b494-ac33d902ca5f"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotate Machine"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -226,6 +246,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_DefaultGameplay_NextMachine = m_DefaultGameplay.FindAction("Next Machine", throwIfNotFound: true);
         m_DefaultGameplay_PreviousMachine = m_DefaultGameplay.FindAction("Previous Machine", throwIfNotFound: true);
         m_DefaultGameplay_PauseGameplay = m_DefaultGameplay.FindAction("Pause Gameplay", throwIfNotFound: true);
+        m_DefaultGameplay_RotateMachine = m_DefaultGameplay.FindAction("Rotate Machine", throwIfNotFound: true);
     }
 
     ~@Controls()
@@ -312,6 +333,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_DefaultGameplay_NextMachine;
     private readonly InputAction m_DefaultGameplay_PreviousMachine;
     private readonly InputAction m_DefaultGameplay_PauseGameplay;
+    private readonly InputAction m_DefaultGameplay_RotateMachine;
     /// <summary>
     /// Provides access to input actions defined in input action map "Default Gameplay".
     /// </summary>
@@ -347,6 +369,10 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "DefaultGameplay/PauseGameplay".
         /// </summary>
         public InputAction @PauseGameplay => m_Wrapper.m_DefaultGameplay_PauseGameplay;
+        /// <summary>
+        /// Provides access to the underlying input action "DefaultGameplay/RotateMachine".
+        /// </summary>
+        public InputAction @RotateMachine => m_Wrapper.m_DefaultGameplay_RotateMachine;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -391,6 +417,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @PauseGameplay.started += instance.OnPauseGameplay;
             @PauseGameplay.performed += instance.OnPauseGameplay;
             @PauseGameplay.canceled += instance.OnPauseGameplay;
+            @RotateMachine.started += instance.OnRotateMachine;
+            @RotateMachine.performed += instance.OnRotateMachine;
+            @RotateMachine.canceled += instance.OnRotateMachine;
         }
 
         /// <summary>
@@ -420,6 +449,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @PauseGameplay.started -= instance.OnPauseGameplay;
             @PauseGameplay.performed -= instance.OnPauseGameplay;
             @PauseGameplay.canceled -= instance.OnPauseGameplay;
+            @RotateMachine.started -= instance.OnRotateMachine;
+            @RotateMachine.performed -= instance.OnRotateMachine;
+            @RotateMachine.canceled -= instance.OnRotateMachine;
         }
 
         /// <summary>
@@ -502,5 +534,12 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnPauseGameplay(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Rotate Machine" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnRotateMachine(InputAction.CallbackContext context);
     }
 }

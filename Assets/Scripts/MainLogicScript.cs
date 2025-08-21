@@ -19,7 +19,7 @@ public class MainLogicScript : MonoBehaviour
     [SerializeField] private float cameraSensitivity = 1;
     [SerializeField] private float zoomSensitivty = 10;
     [SerializeField] private GameObject cursorRenderer;
-    private int cursorSpriteIndex;
+    private int cursorSpriteIndex = 11;
     [SerializeField] private int[] validCursorSpriteIndexes;
     private Dictionary<int, int[]> machineOutputDirection = new();
     private Dictionary<Vector2Int, MachineScriptTemplate> machineScriptLookup = new();
@@ -32,6 +32,7 @@ public class MainLogicScript : MonoBehaviour
     private bool paused = false;
     private SceneManagerScript sceneManager;
     private bool initialized = false;
+    private int cursorRotationOffset = 0;
 
     // Initialize grid values with empty squares in middle and special edges
     public void InitializeGridValues(int gridHeight, int gridWidth)
@@ -171,15 +172,37 @@ public class MainLogicScript : MonoBehaviour
     public void PlaceMachineOnGrid(InputAction.CallbackContext context)
     {
         Vector2 mousePosition = (Vector2)mainCamera.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition);
-        Vector2 roundedMousePosition = new Vector2(Mathf.Round(mousePosition.x), Mathf.Round(mousePosition.y));
-        Vector2Int gridMousePosition = WorldPositionToGridPosition(roundedMousePosition);
-        EditEmptyCellValue(gridMousePosition.x, gridMousePosition.y, cursorSpriteIndex, true);
+        if ((Input.mousePosition.x / Screen.width) < (1460f / 1920f))
+        {
+            Vector2 roundedMousePosition = new Vector2(Mathf.Round(mousePosition.x), Mathf.Round(mousePosition.y));
+            Vector2Int gridMousePosition = WorldPositionToGridPosition(roundedMousePosition);
+            EditEmptyCellValue(gridMousePosition.x, gridMousePosition.y, cursorSpriteIndex, true);
+        }
     }
 
     public void UpdateCursorSprite(int newSpriteIndex)
     {
         cursorSpriteIndex = newSpriteIndex;
         SetCursorSprite();
+    }
+
+    public void ResetRotation()
+    {
+        cursorRotationOffset = 0;
+    }
+
+    public void RotateCursor(InputAction.CallbackContext context)
+    {
+        cursorRotationOffset += 1;
+        if (cursorRotationOffset > 3)
+        {
+            cursorRotationOffset = 0;
+            UpdateCursorSprite(cursorSpriteIndex - 3);
+        }
+        else
+        {
+            UpdateCursorSprite(cursorSpriteIndex + 1);
+        }
     }
 
     public void NextMachineOnCursor(InputAction.CallbackContext context)
@@ -282,9 +305,10 @@ public class MainLogicScript : MonoBehaviour
         controls = new();
         controls.DefaultGameplay.Enable();
         controls.DefaultGameplay.PlaceMachine.performed += PlaceMachineOnGrid;
-        controls.DefaultGameplay.NextMachine.performed += NextMachineOnCursor;
-        controls.DefaultGameplay.PreviousMachine.performed += PreviousMachineOnCursor;
+        // controls.DefaultGameplay.NextMachine.performed += NextMachineOnCursor;
+        // controls.DefaultGameplay.PreviousMachine.performed += PreviousMachineOnCursor;
         controls.DefaultGameplay.PauseGameplay.performed += PauseGame;
+        controls.DefaultGameplay.RotateMachine.performed += RotateCursor;
         SetCursorSprite();
         InitializeOutputDirections();
     }
