@@ -185,6 +185,8 @@ MonoBehaviour:
   bagsRequiredToEndStage: 10
   bagPrefab: {fileID: 5353796599557870078, guid: 878be6fe2564c3b4283ded1560d191c3, type: 3}
   pauseScreenUI: {fileID: 1923314151}
+  TextboxPrefab: {fileID: 3075957340877880630, guid: 86cdef05d942fd745af86db3b9b2b14e, type: 3}
+  TextboxManager: {fileID: 1859980079}
 --- !u!4 &1024809
 Transform:
   m_ObjectHideFlags: 0
@@ -802,7 +804,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: -9.91
   far clip plane: 1000
   field of view: 34
   orthographic: 1
@@ -2178,6 +2180,53 @@ RectTransform:
   m_AnchoredPosition: {x: 735, y: 0}
   m_SizeDelta: {x: 450, y: 1080}
   m_Pivot: {x: 0.49999985, y: 0.5}
+--- !u!1 &1859980078
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1859980080}
+  - component: {fileID: 1859980079}
+  m_Layer: 0
+  m_Name: TextboxManager
+  m_TagString: TextboxManager
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1859980079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1859980078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34e7d3c83f878724797ae335aa6f5299, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainLogicScript: {fileID: 1024808}
+  level: 0
+  textboxCount: 0
+--- !u!4 &1859980080
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1859980078}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.4619777, y: 1.2474144, z: -10.0755205}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1920147733
 GameObject:
   m_ObjectHideFlags: 0
@@ -2428,6 +2477,7 @@ SceneRoots:
   - {fileID: 519420032}
   - {fileID: 619394802}
   - {fileID: 1024809}
+  - {fileID: 1859980080}
   - {fileID: 639895283}
   - {fileID: 465160563}
   - {fileID: 1920147736}

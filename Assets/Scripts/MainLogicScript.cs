@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class MainLogicScript : MonoBehaviour
 {
@@ -33,6 +35,9 @@ public class MainLogicScript : MonoBehaviour
     private SceneManagerScript sceneManager;
     private bool initialized = false;
     private int cursorRotationOffset = 0;
+    [SerializeField] private GameObject TextboxPrefab;
+    private GameObject open_textbox;
+    [SerializeField] private TextboxManager TextboxManager;
 
     // Initialize grid values with empty squares in middle and special edges
     public void InitializeGridValues(int gridHeight, int gridWidth)
@@ -227,6 +232,31 @@ public class MainLogicScript : MonoBehaviour
         UpdateCursorSprite(validCursorSpriteIndexes[currentValidIndex - 1]);
     }
 
+    public void SpawnTextbox(Vector3 position, string text)
+    {
+        open_textbox = Instantiate(TextboxPrefab, position, transform.rotation);
+        open_textbox.GetComponentInChildren<TextMeshPro>().text = text;
+        mainCamera.GetComponent<CameraLogic>().FocusCameraOnPosition(position);
+        EnterTextboxOpenMode();
+    }
+
+    private void EnterTextboxOpenMode()
+    {
+        controls.DefaultGameplay.Disable();
+        controls.TextboxOpen.Enable();
+        controls.TextboxOpen.Unpause.performed += LeaveTextboxOpenMode;
+        PauseGameNoUI();
+    }
+
+    private void LeaveTextboxOpenMode(InputAction.CallbackContext context)
+    {
+        controls.TextboxOpen.Disable();
+        controls.DefaultGameplay.Enable();
+        PauseGameNoUI();
+        Destroy(open_textbox);
+        TextboxManager.IncreaseTextboxCount();
+    }
+
     void InitializeOutputDirections()
     {
         int[] down = { -1, 0 };
@@ -252,6 +282,31 @@ public class MainLogicScript : MonoBehaviour
     public void ButtonPauseGame()
     {
         PauseGame();
+    }
+
+    void PauseGameNoUI()
+    {
+        if (!paused)
+        {
+            paused = true;
+            controls.DefaultGameplay.PlaceMachine.Disable();
+            controls.DefaultGameplay.NextMachine.Disable();
+            controls.DefaultGameplay.PreviousMachine.Disable();
+            cursorRenderer.SetActive(false);
+        }
+        else
+        {
+            paused = false;
+            controls.DefaultGameplay.PlaceMachine.Enable();
+            controls.DefaultGameplay.NextMachine.Enable();
+            controls.DefaultGameplay.PreviousMachine.Enable();
+            cursorRenderer.SetActive(true);
+        }
+        mainCamera.GetComponent<CameraLogic>().PauseGame();
+        foreach (MachineScriptTemplate machine in machineLogicParent.GetComponentsInChildren<MachineScriptTemplate>())
+        {
+            machine.PauseGame();
+        }
     }
 
     void PauseGame(InputAction.CallbackContext context = new())
@@ -309,6 +364,7 @@ public class MainLogicScript : MonoBehaviour
         // controls.DefaultGameplay.PreviousMachine.performed += PreviousMachineOnCursor;
         controls.DefaultGameplay.PauseGameplay.performed += PauseGame;
         controls.DefaultGameplay.RotateMachine.performed += RotateCursor;
+        controls.DefaultGameplay.ResetPuzzle.performed += sceneManager.ResetPuzzle;
         SetCursorSprite();
         InitializeOutputDirections();
     }
@@ -324,5 +380,10 @@ public class MainLogicScript : MonoBehaviour
                 finished = true;
             }
         }
+    }
+
+    public int GetOutputtedBagsCount()
+    {
+        return outputtedBags.Count;
     }
 }

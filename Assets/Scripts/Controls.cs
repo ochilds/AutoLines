@@ -153,6 +153,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Reset Puzzle"",
+                    ""type"": ""Button"",
+                    ""id"": ""b544d20d-d9d1-4e06-b555-15f3c3c5b89a"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -232,6 +241,56 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""Rotate Machine"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e5372b62-5e51-4bd8-a3b4-897faee767a7"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Reset Puzzle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""TextboxOpen"",
+            ""id"": ""c97e2f5b-86f0-456b-baf8-2e20e4a0bbc7"",
+            ""actions"": [
+                {
+                    ""name"": ""Unpause"",
+                    ""type"": ""Button"",
+                    ""id"": ""1cf81abf-52aa-4369-9981-c8edd90e3059"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""582075db-16ec-47d1-bcf2-fb2bf8582c90"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Unpause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3d6b06bb-950c-4c6c-97d4-4c24be5c582d"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Unpause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -247,11 +306,16 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_DefaultGameplay_PreviousMachine = m_DefaultGameplay.FindAction("Previous Machine", throwIfNotFound: true);
         m_DefaultGameplay_PauseGameplay = m_DefaultGameplay.FindAction("Pause Gameplay", throwIfNotFound: true);
         m_DefaultGameplay_RotateMachine = m_DefaultGameplay.FindAction("Rotate Machine", throwIfNotFound: true);
+        m_DefaultGameplay_ResetPuzzle = m_DefaultGameplay.FindAction("Reset Puzzle", throwIfNotFound: true);
+        // TextboxOpen
+        m_TextboxOpen = asset.FindActionMap("TextboxOpen", throwIfNotFound: true);
+        m_TextboxOpen_Unpause = m_TextboxOpen.FindAction("Unpause", throwIfNotFound: true);
     }
 
     ~@Controls()
     {
         UnityEngine.Debug.Assert(!m_DefaultGameplay.enabled, "This will cause a leak and performance issues, Controls.DefaultGameplay.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_TextboxOpen.enabled, "This will cause a leak and performance issues, Controls.TextboxOpen.Disable() has not been called.");
     }
 
     /// <summary>
@@ -334,6 +398,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_DefaultGameplay_PreviousMachine;
     private readonly InputAction m_DefaultGameplay_PauseGameplay;
     private readonly InputAction m_DefaultGameplay_RotateMachine;
+    private readonly InputAction m_DefaultGameplay_ResetPuzzle;
     /// <summary>
     /// Provides access to input actions defined in input action map "Default Gameplay".
     /// </summary>
@@ -373,6 +438,10 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "DefaultGameplay/RotateMachine".
         /// </summary>
         public InputAction @RotateMachine => m_Wrapper.m_DefaultGameplay_RotateMachine;
+        /// <summary>
+        /// Provides access to the underlying input action "DefaultGameplay/ResetPuzzle".
+        /// </summary>
+        public InputAction @ResetPuzzle => m_Wrapper.m_DefaultGameplay_ResetPuzzle;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -420,6 +489,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @RotateMachine.started += instance.OnRotateMachine;
             @RotateMachine.performed += instance.OnRotateMachine;
             @RotateMachine.canceled += instance.OnRotateMachine;
+            @ResetPuzzle.started += instance.OnResetPuzzle;
+            @ResetPuzzle.performed += instance.OnResetPuzzle;
+            @ResetPuzzle.canceled += instance.OnResetPuzzle;
         }
 
         /// <summary>
@@ -452,6 +524,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @RotateMachine.started -= instance.OnRotateMachine;
             @RotateMachine.performed -= instance.OnRotateMachine;
             @RotateMachine.canceled -= instance.OnRotateMachine;
+            @ResetPuzzle.started -= instance.OnResetPuzzle;
+            @ResetPuzzle.performed -= instance.OnResetPuzzle;
+            @ResetPuzzle.canceled -= instance.OnResetPuzzle;
         }
 
         /// <summary>
@@ -485,6 +560,102 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     /// Provides a new <see cref="DefaultGameplayActions" /> instance referencing this action map.
     /// </summary>
     public DefaultGameplayActions @DefaultGameplay => new DefaultGameplayActions(this);
+
+    // TextboxOpen
+    private readonly InputActionMap m_TextboxOpen;
+    private List<ITextboxOpenActions> m_TextboxOpenActionsCallbackInterfaces = new List<ITextboxOpenActions>();
+    private readonly InputAction m_TextboxOpen_Unpause;
+    /// <summary>
+    /// Provides access to input actions defined in input action map "TextboxOpen".
+    /// </summary>
+    public struct TextboxOpenActions
+    {
+        private @Controls m_Wrapper;
+
+        /// <summary>
+        /// Construct a new instance of the input action map wrapper class.
+        /// </summary>
+        public TextboxOpenActions(@Controls wrapper) { m_Wrapper = wrapper; }
+        /// <summary>
+        /// Provides access to the underlying input action "TextboxOpen/Unpause".
+        /// </summary>
+        public InputAction @Unpause => m_Wrapper.m_TextboxOpen_Unpause;
+        /// <summary>
+        /// Provides access to the underlying input action map instance.
+        /// </summary>
+        public InputActionMap Get() { return m_Wrapper.m_TextboxOpen; }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
+        public void Enable() { Get().Enable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
+        public void Disable() { Get().Disable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
+        public bool enabled => Get().enabled;
+        /// <summary>
+        /// Implicitly converts an <see ref="TextboxOpenActions" /> to an <see ref="InputActionMap" /> instance.
+        /// </summary>
+        public static implicit operator InputActionMap(TextboxOpenActions set) { return set.Get(); }
+        /// <summary>
+        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <param name="instance">Callback instance.</param>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
+        /// </remarks>
+        /// <seealso cref="TextboxOpenActions" />
+        public void AddCallbacks(ITextboxOpenActions instance)
+        {
+            if (instance == null || m_Wrapper.m_TextboxOpenActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_TextboxOpenActionsCallbackInterfaces.Add(instance);
+            @Unpause.started += instance.OnUnpause;
+            @Unpause.performed += instance.OnUnpause;
+            @Unpause.canceled += instance.OnUnpause;
+        }
+
+        /// <summary>
+        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
+        /// </remarks>
+        /// <seealso cref="TextboxOpenActions" />
+        private void UnregisterCallbacks(ITextboxOpenActions instance)
+        {
+            @Unpause.started -= instance.OnUnpause;
+            @Unpause.performed -= instance.OnUnpause;
+            @Unpause.canceled -= instance.OnUnpause;
+        }
+
+        /// <summary>
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="TextboxOpenActions.UnregisterCallbacks(ITextboxOpenActions)" />.
+        /// </summary>
+        /// <seealso cref="TextboxOpenActions.UnregisterCallbacks(ITextboxOpenActions)" />
+        public void RemoveCallbacks(ITextboxOpenActions instance)
+        {
+            if (m_Wrapper.m_TextboxOpenActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        /// <summary>
+        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
+        /// </remarks>
+        /// <seealso cref="TextboxOpenActions.AddCallbacks(ITextboxOpenActions)" />
+        /// <seealso cref="TextboxOpenActions.RemoveCallbacks(ITextboxOpenActions)" />
+        /// <seealso cref="TextboxOpenActions.UnregisterCallbacks(ITextboxOpenActions)" />
+        public void SetCallbacks(ITextboxOpenActions instance)
+        {
+            foreach (var item in m_Wrapper.m_TextboxOpenActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_TextboxOpenActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    /// <summary>
+    /// Provides a new <see cref="TextboxOpenActions" /> instance referencing this action map.
+    /// </summary>
+    public TextboxOpenActions @TextboxOpen => new TextboxOpenActions(this);
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Default Gameplay" which allows adding and removing callbacks.
     /// </summary>
@@ -541,5 +712,27 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnRotateMachine(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Reset Puzzle" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnResetPuzzle(InputAction.CallbackContext context);
+    }
+    /// <summary>
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "TextboxOpen" which allows adding and removing callbacks.
+    /// </summary>
+    /// <seealso cref="TextboxOpenActions.AddCallbacks(ITextboxOpenActions)" />
+    /// <seealso cref="TextboxOpenActions.RemoveCallbacks(ITextboxOpenActions)" />
+    public interface ITextboxOpenActions
+    {
+        /// <summary>
+        /// Method invoked when associated input action "Unpause" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnUnpause(InputAction.CallbackContext context);
     }
 }

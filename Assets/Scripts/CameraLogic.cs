@@ -4,7 +4,7 @@ using UnityEngine.Rendering;
 
 public class CameraLogic : MonoBehaviour
 {
-    private Camera camera;
+    private Camera main_camera;
     [SerializeField] private float xBounds;
     [SerializeField] private float yBounds;
     private Vector2 positionOfMouseWhenMovementStart;
@@ -16,7 +16,7 @@ public class CameraLogic : MonoBehaviour
     void Start()
     {
         // Get camera
-        camera = GetComponent<Camera>();
+        main_camera = GetComponent<Camera>();
         // Enable Input
         controls = new();
         controls.DefaultGameplay.Enable();
@@ -29,7 +29,7 @@ public class CameraLogic : MonoBehaviour
         // Move the camera with respect to the zoom
         if (movingWRespectToZoom)
         {
-            transform.Translate(camera.orthographicSize * moveSpeed * value);
+            transform.Translate(main_camera.orthographicSize * moveSpeed * value);
 
         }
         else
@@ -57,6 +57,12 @@ public class CameraLogic : MonoBehaviour
         // }
     }
 
+    public void FocusCameraOnPosition(Vector2 position)
+    {
+        transform.position = position;
+        main_camera.orthographicSize = 5;
+    }
+
     public void SetCameraBounds(Vector2 bounds)
     {
         // Set the bounds (The dimesions are flipped)
@@ -67,7 +73,7 @@ public class CameraLogic : MonoBehaviour
     public void ActivateCameraMovement(InputAction.CallbackContext context)
     {
         mouseMovementActive = true;
-        positionOfMouseWhenMovementStart = camera.ScreenToWorldPoint(Input.mousePosition);
+        positionOfMouseWhenMovementStart = main_camera.ScreenToWorldPoint(Input.mousePosition);
     }
 
     public void DeactivateCameraMovement(InputAction.CallbackContext context)
@@ -78,14 +84,14 @@ public class CameraLogic : MonoBehaviour
     // Add the mouse scroll delta to camera zoom (Scroll is oppisite direct to zoom)
     public void ZoomCamera(float amount)
     {
-        camera.orthographicSize -= amount;
-        if (camera.orthographicSize > 50)
+        main_camera.orthographicSize -= amount;
+        if (main_camera.orthographicSize > 50)
         {
-            camera.orthographicSize = 50;
+            main_camera.orthographicSize = 50;
         }
-        if (camera.orthographicSize < 0.6f)
+        if (main_camera.orthographicSize < 0.6f)
         {
-            camera.orthographicSize = 0.6f;
+            main_camera.orthographicSize = 0.6f;
         }
     }
 
@@ -100,7 +106,7 @@ public class CameraLogic : MonoBehaviour
         {
             if (mouseMovementActive)
             {
-                Vector2 mousePosition = (Vector2)camera.ScreenToWorldPoint(Input.mousePosition);
+                Vector2 mousePosition = (Vector2)main_camera.ScreenToWorldPoint(Input.mousePosition);
                 MoveCamera(positionOfMouseWhenMovementStart - mousePosition);
             }
         }

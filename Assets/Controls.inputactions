@@ -67,6 +67,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Reset Puzzle",
+                    "type": "Button",
+                    "id": "b544d20d-d9d1-4e06-b555-15f3c3c5b89a",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -144,6 +153,56 @@
                     "processors": "",
                     "groups": "",
                     "action": "Rotate Machine",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e5372b62-5e51-4bd8-a3b4-897faee767a7",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Reset Puzzle",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "TextboxOpen",
+            "id": "c97e2f5b-86f0-456b-baf8-2e20e4a0bbc7",
+            "actions": [
+                {
+                    "name": "Unpause",
+                    "type": "Button",
+                    "id": "1cf81abf-52aa-4369-9981-c8edd90e3059",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "582075db-16ec-47d1-bcf2-fb2bf8582c90",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Unpause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3d6b06bb-950c-4c6c-97d4-4c24be5c582d",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Unpause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
