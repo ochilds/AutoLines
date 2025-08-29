@@ -21,6 +21,7 @@ public class MachineScriptTemplate : MonoBehaviour
     private int outputSide;
     [SerializeField] private GameObject bagPrefab;
     private bool paused = false;
+    public int outputtedBags = 0;
 
     void Update()
     {
@@ -85,6 +86,7 @@ public class MachineScriptTemplate : MonoBehaviour
                 case 10:
                     mainLogicScript.OutputBag(input[0]);
                     input.RemoveAt(0);
+                    outputtedBags += 1;
                     return true;
                 // Belt
                 case 11 or 12 or 13 or 14 or 15 or 16 or 17 or 18 or 19 or 20 or 21 or 22:

@@ -182,7 +182,8 @@ MonoBehaviour:
   zoomSensitivty: 1
   cursorRenderer: {fileID: 1920147733}
   validCursorSpriteIndexes: 00000000090000000a0000000b0000000c0000000d0000000e0000000f00000010000000110000001200000013000000140000001500000016000000
-  bagsRequiredToEndStage: 10
+  bagsRequiredToEndStage: 5
+  finished: 0
   bagPrefab: {fileID: 5353796599557870078, guid: 878be6fe2564c3b4283ded1560d191c3, type: 3}
   pauseScreenUI: {fileID: 1923314151}
   TextboxPrefab: {fileID: 3075957340877880630, guid: 86cdef05d942fd745af86db3b9b2b14e, type: 3}

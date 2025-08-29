@@ -28,7 +28,7 @@ public class MainLogicScript : MonoBehaviour
     private int FUNCTIONSPRITECUTOFF = 8;
     private Controls controls;
     [SerializeField] private int bagsRequiredToEndStage;
-    private bool finished = false;
+    public bool finished = false;
     [SerializeField] private GameObject bagPrefab;
     [SerializeField] private GameObject pauseScreenUI;
     private bool paused = false;
@@ -375,11 +375,31 @@ public class MainLogicScript : MonoBehaviour
         {
             MoveCursor();
             mainCamera.GetComponent<CameraLogic>().ZoomCamera(controls.DefaultGameplay.ZoomCamera.ReadValue<Vector2>().y * zoomSensitivty);
-            if (outputtedBags.Count > bagsRequiredToEndStage)
+            if (IsFinished())
             {
                 finished = true;
             }
         }
+    }
+
+    bool IsFinished()
+    {
+        foreach (MachineScriptTemplate machine in machineScriptLookup.Values)
+        {
+            if (machine.machineType == 10)
+            {
+                if (machine.outputtedBags < bagsRequiredToEndStage)
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public void NextStage()
+    {
+        sceneManager.LoadNextPuzzle();
     }
 
     public int GetOutputtedBagsCount()

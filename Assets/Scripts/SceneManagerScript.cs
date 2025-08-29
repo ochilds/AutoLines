@@ -103,4 +103,16 @@ public class SceneManagerScript : MonoBehaviour
             StartCoroutine(LoadPuzzleStage(puzzleSetups[loadedPuzzleIndex]));
         }
     }
+
+    public void LoadNextPuzzle()
+    {
+        if (loadedPuzzleIndex == puzzleSetups.Count)
+        {
+            LoadMainMenuScene();
+        }
+        else
+        {
+            LoadPuzzle(loadedPuzzleIndex + 1);
+        }
+    }
 }

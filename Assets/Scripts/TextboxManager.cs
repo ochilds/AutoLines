@@ -49,13 +49,21 @@ public class TextboxManager : MonoBehaviour
                 {
                     SpawnTextbox(new Vector2(-5.2f, 3.6f), "IF YOU MESS UP YOU CAN PRESS 'Q' TO RESTART THE LEVEL");
                 }
-                if (textboxCount == 6 && mainLogicScript.GetOutputtedBagsCount() > 2)
+                if (textboxCount == 6 && mainLogicScript.GetOutputtedBagsCount() > 1)
                 {
                     SpawnTextbox(new Vector2(-5.2f, 3.6f), "GOOD JOB");
                 }
                 if (textboxCount == 7)
                 {
-                    SpawnTextbox(new Vector2(-5.2f, 3.6f), "ONCE TEN BAGS HAVE BEEN PUT INTO EACH OUTPUT THE LEVEL WILL END");
+                    SpawnTextbox(new Vector2(-5.2f, 3.6f), "ONCE FIVE BAGS HAVE BEEN PUT INTO EACH OUTPUT THE LEVEL WILL END");
+                }
+                if (textboxCount == 8 && mainLogicScript.finished)
+                {
+                    SpawnTextbox(new Vector2(-5.2f, 3.6f), "LEVEL COMPLETE\nPRESS ENTER TO CONTINUE");
+                }
+                if (textboxCount == 9)
+                {
+                    mainLogicScript.NextStage();
                 }
             }
         }
