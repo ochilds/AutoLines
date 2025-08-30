@@ -175,6 +175,7 @@ MonoBehaviour:
   - {fileID: 1216364339, guid: d7c97e9e8ee8b9743a30066b719fadcc, type: 3}
   - {fileID: -2067112645, guid: d7c97e9e8ee8b9743a30066b719fadcc, type: 3}
   - {fileID: -974467259, guid: d7c97e9e8ee8b9743a30066b719fadcc, type: 3}
+  - {fileID: -514183012, guid: d7c97e9e8ee8b9743a30066b719fadcc, type: 3}
   machineLogicParent: {fileID: 465160562}
   machineLogicPrefab: {fileID: 2837679201704155270, guid: 7168cea24587a444c80a08a5cf4069e9, type: 3}
   mainCamera: {fileID: 519420028}

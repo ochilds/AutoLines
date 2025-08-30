@@ -77,7 +77,7 @@ public class MainLogicScript : MonoBehaviour
         if (gridValues[x, y] == 0)
         {
             gridValues[x, y] = value;
-            if (value > FUNCTIONSPRITECUTOFF)
+            if (value > FUNCTIONSPRITECUTOFF && value < 23)
             {
                 InitializeMachineLogic(value, x, y);
             }
@@ -165,7 +165,7 @@ public class MainLogicScript : MonoBehaviour
     public void MoveCursor()
     {
         Vector2 mousePosition = (Vector2)mainCamera.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition);
-        Vector2 roundedMousePosition = new Vector2(Mathf.Round(mousePosition.x), Mathf.Round(mousePosition.y));
+        Vector2 roundedMousePosition = new Vector2(Mathf.Round(mousePosition.x - 0.5f), Mathf.Round(mousePosition.y + 0.5f));
         cursorRenderer.GetComponent<CursorControl>().SetPosition(roundedMousePosition);
     }
 
@@ -179,7 +179,7 @@ public class MainLogicScript : MonoBehaviour
         Vector2 mousePosition = (Vector2)mainCamera.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition);
         if ((Input.mousePosition.x / Screen.width) < (1460f / 1920f))
         {
-            Vector2 roundedMousePosition = new Vector2(Mathf.Round(mousePosition.x), Mathf.Round(mousePosition.y));
+            Vector2 roundedMousePosition = new Vector2(Mathf.Round(mousePosition.x - 0.5f), Mathf.Round(mousePosition.y + 0.5f));
             Vector2Int gridMousePosition = WorldPositionToGridPosition(roundedMousePosition);
             EditEmptyCellValue(gridMousePosition.x, gridMousePosition.y, cursorSpriteIndex, true);
         }

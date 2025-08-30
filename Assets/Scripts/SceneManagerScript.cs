@@ -40,8 +40,20 @@ public class SceneManagerScript : MonoBehaviour
 
     void Start()
     {
-        puzzleSetups.Add(new PuzzleSetup(1, new(10, 10), new Dictionary<Vector2Int, int>() { { new(15, 3), 9 },
-                                                                                             { new(12, 3), 10 }}));
+        puzzleSetups.Add(new PuzzleSetup(1, new(9, 9), new Dictionary<Vector2Int, int>() { { new(15, 3), 9 },
+                                                                                             { new(12, 3), 10 } }));
+        puzzleSetups.Add(new PuzzleSetup(2, new(9, 9), new Dictionary<Vector2Int, int>() { { new(15, 3), 9 },
+                                                                                             { new(14, 4), 10 } }));
+        puzzleSetups.Add(new PuzzleSetup(3, new(9, 9), new Dictionary<Vector2Int, int>() { { new(15, 4), 9 },
+                                                                                             { new(12, 6), 10 },
+                                                                                             { new(14, 3), 23 },
+                                                                                             { new(13, 3), 23 },
+                                                                                             { new(14, 5), 23 },
+                                                                                             { new(13, 5), 23 } }));
+        puzzleSetups.Add(new PuzzleSetup(4, new(9, 9), new Dictionary<Vector2Int, int>() { { new(15, 11), 9 },
+                                                                                             { new(10, 11), 10 },
+                                                                                             { new(9, 11), 9 },
+                                                                                             { new(7, 9), 10 },}));
     }
 
     public void LoadLevelSelect()
