@@ -369,12 +369,21 @@ public class MainLogicScript : MonoBehaviour
         InitializeOutputDirections();
     }
 
+    public void Delete()
+    {
+        controls.Dispose();
+    }
+
     void Update()
     {
         if (!paused)
         {
             MoveCursor();
-            mainCamera.GetComponent<CameraLogic>().ZoomCamera(controls.DefaultGameplay.ZoomCamera.ReadValue<Vector2>().y * zoomSensitivty);
+            try
+            {
+                mainCamera.GetComponent<CameraLogic>().ZoomCamera(controls.DefaultGameplay.ZoomCamera.ReadValue<Vector2>().y * zoomSensitivty);
+            }
+            finally {}
             if (IsFinished())
             {
                 finished = true;

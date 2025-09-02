@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
+using System.Linq;
 
 public class PuzzleSetup
 {
@@ -82,10 +83,21 @@ public class SceneManagerScript : MonoBehaviour
 
     private IEnumerator LoadPuzzleStage(PuzzleSetup puzzle)
     {
+        MainLogicScript logicScript;
+        if (GameObject.FindGameObjectsWithTag("MainLogic").Count() > 0)
+        {
+            logicScript = GameObject.FindGameObjectWithTag("MainLogic").GetComponent<MainLogicScript>();
+            logicScript.Delete();
+        }
+
+        if (SceneManager.GetActiveScene().name == "GamePlay")
+        {
+            SceneManager.UnloadSceneAsync("GamePlay");
+        }
         AsyncOperation op = SceneManager.LoadSceneAsync("Gameplay");
         while (!op.isDone) { yield return null; }
 
-        MainLogicScript logicScript = GameObject.FindGameObjectWithTag("MainLogic").GetComponent<MainLogicScript>();
+        logicScript = GameObject.FindGameObjectWithTag("MainLogic").GetComponent<MainLogicScript>();
         logicScript.Initialize(puzzle.puzzleSize);
         foreach (KeyValuePair<Vector2Int, int> tile in puzzle.setup)
         {
